@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'MainPage.dart';
 import 'LoadPage.dart';
 import 'ProfilePage.dart';
@@ -18,23 +17,23 @@ class _MyApp extends State<MyApp> {
     super.initState();
   }
 
-  firstOpenChecker() async {
-    DateTime now, secondNow;
-    String time;
-    final isFirstOpen = await SharedPreferences.getInstance();
-    if (isFirstOpen.getString('deadline') != null) {
-      print("still time to deadline");
-      time = isFirstOpen.getString('deadline');
-//      parsingFirstDate = DateTime(time);
-      secondNow = DateTime.now();
-      print(secondNow.toString());
-      if (secondNow.difference(now) >= Duration(days: 1)) {}
-    } else {
-      now = DateTime.now();
-      isFirstOpen.setString('deadline', now.toString());
-      print(now.toString());
-    }
-  }
+//   firstOpenChecker() async {
+//     DateTime now, secondNow;
+//     String time;
+//     final isFirstOpen = await SharedPreferences.getInstance();
+//     if (isFirstOpen.getString('deadline') != null) {
+//       print("still time to deadline");
+//       time = isFirstOpen.getString('deadline');
+// //      parsingFirstDate = DateTime(time);
+//       secondNow = DateTime.now();
+//       print(secondNow.toString());
+//       if (secondNow.difference(now) >= Duration(days: 1)) {}
+//     } else {
+//       now = DateTime.now();
+//       isFirstOpen.setString('deadline', now.toString());
+//       print(now.toString());
+//     }
+//   }
 
   @override
   Widget build(BuildContext context) {

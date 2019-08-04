@@ -181,7 +181,6 @@ class Chart extends StatefulWidget {
 class _Chart extends State<Chart> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setState(() {
       getData().whenComplete(() {
@@ -192,7 +191,6 @@ class _Chart extends State<Chart> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     setState(() {
       _createSampleData();
       getData();

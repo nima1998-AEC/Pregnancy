@@ -3,7 +3,6 @@ import 'AddWeight.dart';
 import 'ProfilePage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'HistoryPage.dart';
-import 'LoadPage.dart';
 
 class DrawerDesign extends StatefulWidget {
   DrawerDesignState createState() => DrawerDesignState();

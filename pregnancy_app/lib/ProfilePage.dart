@@ -7,9 +7,7 @@ import 'AddWeight.dart';
 import 'HistoryPage.dart';
 import 'MotherPropoerties.dart';
 import 'LoadPage.dart';
-import 'DrawerDesign.dart';
 
-var scaffoldKey1 = GlobalKey<ScaffoldState>();
 final nameController = TextEditingController();
 final ageController = TextEditingController();
 final heightController = TextEditingController();
@@ -27,8 +25,8 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePage extends State<ProfilePage> {
   PersianDatePickerWidget persianDatePicker;
-  double bmi = 0.0;
-  String status = 'نامعلوم';
+  double bmi;
+  String status = '';
 
   Future<void> _saveProfileData(BuildContext context, String name, int age,
       double height, double weight, String date, int number) async {
@@ -53,7 +51,6 @@ class _ProfilePage extends State<ProfilePage> {
 
   void _loadBmiStatus() async {
     loadProfileData().then((mom) {
-//      motherProperties = mom;
       if (mom.height != null && mom.weight != null) {
         setState(() {
           bmi = mom.bmi;
@@ -176,50 +173,11 @@ class _ProfilePage extends State<ProfilePage> {
           SizedBox(
             height: 30.0,
           ),
-          Row(
-            textDirection: TextDirection.rtl,
-            children: <Widget>[
-              Container(
-                  margin: EdgeInsets.only(right: 8.0, left: 8.0),
-                  child: new IconButton(
-                    highlightColor: Color.fromARGB(255, 45, 34, 22),
-                    onPressed: () {
-                      scaffoldKey1.currentState.openEndDrawer();
-                    },
-                    icon: new Icon(
-                      FontAwesomeIcons.alignRight,
-                      color: Colors.white,
-                    ),
-                  )),
-              Expanded(
-                child: Text(
-                  "راهنمای آموزشی و مراقبتی مادران باردار",
-                  textDirection: TextDirection.rtl,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: "Terafik",
-                      color: Colors.white),
-                ),
-              ),
-              Container(
-                  margin: EdgeInsets.only(right: 8.0, left: 16.0),
-                  child: Container(
-                    child: Image.asset(
-                      "assets/logo.png",
-                      fit: BoxFit.fill,
-                    ),
-                    width: 30,
-                    height: 30,
-                  )),
-            ],
-          ),
           Expanded(
             child: ListView(
               children: <Widget>[
                 Container(
-                  margin: EdgeInsets.only(left: 20, right: 20, top: 20),
+                  margin: EdgeInsets.only(left: 32, right: 32, top: 20),
                   decoration: BoxDecoration(
                       color: Color.fromARGB(255, 255, 255, 255),
                       borderRadius: BorderRadius.circular(10)),
@@ -459,13 +417,15 @@ class _ProfilePage extends State<ProfilePage> {
                                       margin: EdgeInsets.only(
                                         left: 16.0,
                                       ),
-                                      child: Text(
-                                        bmi.toStringAsFixed(2).toString(),
-                                        textDirection: TextDirection.rtl,
-                                        style: TextStyle(
-                                            fontFamily: "Sans",
-                                            color: Colors.white),
-                                      ),
+                                      child: bmi != null
+                                          ? Text(
+                                              bmi.toStringAsFixed(2).toString(),
+                                              textDirection: TextDirection.rtl,
+                                              style: TextStyle(
+                                                  fontFamily: "Sans",
+                                                  color: Colors.white),
+                                            )
+                                          : Text(''),
                                     ),
                                   ],
                                 ),
@@ -607,7 +567,7 @@ class _ProfilePage extends State<ProfilePage> {
                       ),
                     ],
                   ),
-                  margin: EdgeInsets.all(16.0),
+                  margin: EdgeInsets.only(left: 32, right: 32, top: 12),
                 )
               ],
             ),
@@ -615,99 +575,32 @@ class _ProfilePage extends State<ProfilePage> {
         ],
       ),
     );
-
-    return Scaffold(
-      key: scaffoldKey1,
-      endDrawer: notNull
-          ? Container(
-              width: MediaQuery.of(context).size.width / (1.4),
-              child: Drawer(
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage(
-                                "assets/DrawerHeader.png",
-                              ),
-                              fit: BoxFit.fill)),
-                      height: MediaQuery.of(context).size.height * 0.32,
-                    ),
-                    Expanded(
-                      child: ListView(
-                        padding: EdgeInsets.only(top: 0),
-                        children: <Widget>[
-                          Column(
-                            children: <Widget>[
-//                        Container(
-//                          child: new Directionality(
-//                              textDirection: TextDirection.rtl,
-//                              child: Theme(
-//                                data: ThemeData(
-//                                  highlightColor:
-//                                  Color.fromARGB(255, 221, 85, 153),
-//                                ),
-//                                child: ListTile(
-//                                  onTap: () {
-//                                    Navigator.push(
-//                                        context,
-//                                        MaterialPageRoute(
-//                                            builder: (BuildContext context) =>
-//                                                ProfilePage()));
-//                                  },
-//                                  title: Text("مشخصات مادر",
-//                                      textDirection: TextDirection.rtl,
-//                                      style: TextStyle(
-//                                          fontFamily: "Terafik",
-//                                          color: Color.fromARGB(255, 84, 31, 49),
-//                                          fontWeight: FontWeight.bold)),
-//                                  leading: Icon(
-//                                    FontAwesomeIcons.idBadge,
-//                                    color: Color.fromARGB(255, 84, 31, 49),
-//                                    textDirection: TextDirection.rtl,
-//                                  ),
-//                                ),
-//                              )),
-//                          height: 45,
-//                        ),
-                              Container(
-                                child: new Directionality(
-                                  textDirection: TextDirection.rtl,
-                                  child: Theme(
-                                    data: ThemeData(
-                                      highlightColor:
-                                          Color.fromARGB(255, 221, 85, 153),
-                                    ),
-                                    child: ListTile(
-                                      title: Text(
-                                        "ثبت وزن هفتگی",
-                                        textDirection: TextDirection.rtl,
-                                        style: TextStyle(
-                                            fontFamily: "Terafik",
-                                            color:
-                                                Color.fromARGB(255, 84, 31, 49),
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      leading: Icon(
-                                        FontAwesomeIcons.weight,
-                                        color: Color.fromARGB(255, 84, 31, 49),
-                                        textDirection: TextDirection.rtl,
-                                      ),
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder:
-                                                    (BuildContext context) =>
-                                                        AddWeight()));
-                                      },
-                                    ),
-                                  ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: true,
+      home: Scaffold(
+        endDrawer: notNull
+            ? Container(
+                width: MediaQuery.of(context).size.width / (1.4),
+                child: Drawer(
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage(
+                                  "assets/DrawerHeader.png",
                                 ),
-                                height: 45,
-                              ),
-                              Container(
-                                child: new Directionality(
+                                fit: BoxFit.fill)),
+                        height: MediaQuery.of(context).size.height * 0.32,
+                      ),
+                      Expanded(
+                        child: ListView(
+                          padding: EdgeInsets.only(top: 0),
+                          children: <Widget>[
+                            Column(
+                              children: <Widget>[
+                                Container(
+                                  child: new Directionality(
                                     textDirection: TextDirection.rtl,
                                     child: Theme(
                                       data: ThemeData(
@@ -715,15 +608,17 @@ class _ProfilePage extends State<ProfilePage> {
                                             Color.fromARGB(255, 221, 85, 153),
                                       ),
                                       child: ListTile(
-                                        title: Text("مشاهده روند رشد",
-                                            textDirection: TextDirection.rtl,
-                                            style: TextStyle(
-                                                fontFamily: "Terafik",
-                                                color: Color.fromARGB(
-                                                    255, 84, 31, 49),
-                                                fontWeight: FontWeight.bold)),
+                                        title: Text(
+                                          "ثبت وزن هفتگی",
+                                          textDirection: TextDirection.rtl,
+                                          style: TextStyle(
+                                              fontFamily: "Terafik",
+                                              color: Color.fromARGB(
+                                                  255, 84, 31, 49),
+                                              fontWeight: FontWeight.bold),
+                                        ),
                                         leading: Icon(
-                                          FontAwesomeIcons.solidFolderOpen,
+                                          FontAwesomeIcons.weight,
                                           color:
                                               Color.fromARGB(255, 84, 31, 49),
                                           textDirection: TextDirection.rtl,
@@ -734,243 +629,281 @@ class _ProfilePage extends State<ProfilePage> {
                                               MaterialPageRoute(
                                                   builder:
                                                       (BuildContext context) =>
-                                                          HistoryPage()));
+                                                          AddWeight()));
                                         },
                                       ),
-                                    )),
-                                height: 45,
-                              ),
-                              Container(
-                                child: new Directionality(
-                                    textDirection: TextDirection.rtl,
-                                    child: Theme(
-                                      data: ThemeData(
-                                        highlightColor:
-                                            Color.fromARGB(255, 221, 85, 153),
-                                      ),
-                                      child: ListTile(
-                                        title: Text("توصیه های آموزشی",
-                                            textDirection: TextDirection.rtl,
-                                            style: TextStyle(
-                                                fontFamily: "Terafik",
-                                                color: Color.fromARGB(
-                                                    255, 84, 31, 49),
-                                                fontWeight: FontWeight.bold)),
-                                        leading: Icon(
-                                          FontAwesomeIcons.chalkboardTeacher,
-                                          color:
-                                              Color.fromARGB(255, 84, 31, 49),
-                                          textDirection: TextDirection.rtl,
-                                        ),
-                                      ),
-                                    )),
-                                height: 45,
-                              ),
-                              Container(
-                                child: new Directionality(
-                                    textDirection: TextDirection.rtl,
-                                    child: Theme(
-                                      data: ThemeData(
-                                        highlightColor:
-                                            Color.fromARGB(255, 221, 85, 153),
-                                      ),
-                                      child: ListTile(
-                                        title: Text("سوابق ثبت وزن",
-                                            textDirection: TextDirection.rtl,
-                                            style: TextStyle(
-                                                fontFamily: "Terafik",
-                                                color: Color.fromARGB(
-                                                    255, 84, 31, 49),
-                                                fontWeight: FontWeight.bold)),
-                                        leading: Icon(
-                                          FontAwesomeIcons.chartArea,
-                                          color:
-                                              Color.fromARGB(255, 84, 31, 49),
-                                          textDirection: TextDirection.rtl,
-                                        ),
-                                      ),
-                                    )),
-                                height: 45,
-                              ),
-                              Container(
-                                child: new Directionality(
-                                    textDirection: TextDirection.rtl,
-                                    child: Theme(
-                                      data: ThemeData(
-                                        highlightColor:
-                                            Color.fromARGB(255, 221, 85, 153),
-                                      ),
-                                      child: ListTile(
-                                        title: Text(
-                                          "پرسش و پاسخ",
-                                          textDirection: TextDirection.rtl,
-                                          style: TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 84, 31, 49),
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        leading: Icon(
-                                          FontAwesomeIcons.questionCircle,
-                                          color:
-                                              Color.fromARGB(255, 84, 31, 49),
-                                          textDirection: TextDirection.rtl,
-                                        ),
-                                      ),
-                                    )),
-                                height: 45,
-                              ),
-                              Container(
-                                child: new Directionality(
-                                    textDirection: TextDirection.rtl,
-                                    child: Theme(
-                                      data: ThemeData(
-                                        highlightColor:
-                                            Color.fromARGB(255, 221, 85, 153),
-                                      ),
-                                      child: ListTile(
-                                        title: Text("نکات ورزشی ماهانه",
-                                            textDirection: TextDirection.rtl,
-                                            style: TextStyle(
-                                                fontFamily: "Terafik",
-                                                color: Color.fromARGB(
-                                                    255, 84, 31, 49),
-                                                fontWeight: FontWeight.bold)),
-                                        leading: Icon(
-                                          FontAwesomeIcons.running,
-                                          color:
-                                              Color.fromARGB(255, 84, 31, 49),
-                                          textDirection: TextDirection.rtl,
-                                        ),
-                                      ),
-                                    )),
-                                height: 45,
-                              ),
-                              //
-                              Container(
-                                child: new Directionality(
-                                    textDirection: TextDirection.rtl,
-                                    child: Theme(
-                                      data: ThemeData(
-                                        highlightColor:
-                                            Color.fromARGB(255, 221, 85, 153),
-                                      ),
-                                      child: ListTile(
-                                        title: Text("توصیه های روانی",
-                                            textDirection: TextDirection.rtl,
-                                            style: TextStyle(
-                                                fontFamily: "Terafik",
-                                                color: Color.fromARGB(
-                                                    255, 84, 31, 49),
-                                                fontWeight: FontWeight.bold)),
-                                        leading: Icon(
-                                          FontAwesomeIcons.universalAccess,
-                                          color:
-                                              Color.fromARGB(255, 84, 31, 49),
-                                          textDirection: TextDirection.rtl,
-                                        ),
-                                      ),
-                                    )),
-                                height: 45,
-                              ),
-                              Container(
-                                child: new Directionality(
-                                    textDirection: TextDirection.rtl,
-                                    child: Theme(
-                                      data: ThemeData(
-                                        highlightColor:
-                                            Color.fromARGB(255, 221, 85, 153),
-                                      ),
-                                      child: ListTile(
-                                        title: Text("ویژه پدران",
-                                            textDirection: TextDirection.rtl,
-                                            style: TextStyle(
-                                                fontFamily: "Terafik",
-                                                color: Color.fromARGB(
-                                                    255, 84, 31, 49),
-                                                fontWeight: FontWeight.bold)),
-                                        leading: Icon(
-                                          FontAwesomeIcons.userTag,
-                                          color:
-                                              Color.fromARGB(255, 84, 31, 49),
-                                          textDirection: TextDirection.rtl,
-                                        ),
-                                      ),
-                                    )),
-                                height: 45,
-                              ),
-                              Container(
-                                height: 45,
-                                child: new Directionality(
-                                    textDirection: TextDirection.rtl,
-                                    child: Theme(
-                                      data: ThemeData(
-                                        highlightColor:
-                                            Color.fromARGB(255, 221, 85, 153),
-                                      ),
-                                      child: ListTile(
-                                        title: Text("مراکز بهداشتی",
-                                            textDirection: TextDirection.rtl,
-                                            style: TextStyle(
-                                                fontFamily: "Terafik",
-                                                color: Color.fromARGB(
-                                                    255, 84, 31, 49),
-                                                fontWeight: FontWeight.bold)),
-                                        leading: Icon(
-                                          FontAwesomeIcons.building,
-                                          color:
-                                              Color.fromARGB(255, 84, 31, 49),
-                                          textDirection: TextDirection.rtl,
-                                        ),
-                                      ),
-                                    )),
-                              ),
-                              new Directionality(
-                                  textDirection: TextDirection.rtl,
-                                  child: Theme(
-                                    data: ThemeData(
-                                      highlightColor:
-                                          Color.fromARGB(255, 221, 85, 153),
                                     ),
-                                    child: ListTile(
-                                      title: Text("درباره",
-                                          textDirection: TextDirection.rtl,
-                                          style: TextStyle(
-                                              fontFamily: "Terafik",
-                                              color: Color.fromARGB(
-                                                  255, 84, 31, 49),
-                                              fontWeight: FontWeight.bold)),
-                                      leading: Icon(
-                                        FontAwesomeIcons.info,
-                                        color: Color.fromARGB(255, 84, 31, 49),
-                                        textDirection: TextDirection.rtl,
-                                      ),
-                                    ),
-                                  )),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Container(
-                                alignment: Alignment.bottomLeft,
-                                margin: EdgeInsets.only(left: 7.0, bottom: 4.0),
-                                child: Text(
-                                  "نگارش اول_۱۳۹۸",
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.grey,
                                   ),
+                                  height: 45,
                                 ),
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
+                                Container(
+                                  child: new Directionality(
+                                      textDirection: TextDirection.rtl,
+                                      child: Theme(
+                                        data: ThemeData(
+                                          highlightColor:
+                                              Color.fromARGB(255, 221, 85, 153),
+                                        ),
+                                        child: ListTile(
+                                          title: Text("مشاهده روند رشد",
+                                              textDirection: TextDirection.rtl,
+                                              style: TextStyle(
+                                                  fontFamily: "Terafik",
+                                                  color: Color.fromARGB(
+                                                      255, 84, 31, 49),
+                                                  fontWeight: FontWeight.bold)),
+                                          leading: Icon(
+                                            FontAwesomeIcons.solidFolderOpen,
+                                            color:
+                                                Color.fromARGB(255, 84, 31, 49),
+                                            textDirection: TextDirection.rtl,
+                                          ),
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        HistoryPage()));
+                                          },
+                                        ),
+                                      )),
+                                  height: 45,
+                                ),
+                                Container(
+                                  child: new Directionality(
+                                      textDirection: TextDirection.rtl,
+                                      child: Theme(
+                                        data: ThemeData(
+                                          highlightColor:
+                                              Color.fromARGB(255, 221, 85, 153),
+                                        ),
+                                        child: ListTile(
+                                          title: Text("توصیه های آموزشی",
+                                              textDirection: TextDirection.rtl,
+                                              style: TextStyle(
+                                                  fontFamily: "Terafik",
+                                                  color: Color.fromARGB(
+                                                      255, 84, 31, 49),
+                                                  fontWeight: FontWeight.bold)),
+                                          leading: Icon(
+                                            FontAwesomeIcons.chalkboardTeacher,
+                                            color:
+                                                Color.fromARGB(255, 84, 31, 49),
+                                            textDirection: TextDirection.rtl,
+                                          ),
+                                        ),
+                                      )),
+                                  height: 45,
+                                ),
+                                Container(
+                                  child: new Directionality(
+                                      textDirection: TextDirection.rtl,
+                                      child: Theme(
+                                        data: ThemeData(
+                                          highlightColor:
+                                              Color.fromARGB(255, 221, 85, 153),
+                                        ),
+                                        child: ListTile(
+                                          title: Text("سوابق ثبت وزن",
+                                              textDirection: TextDirection.rtl,
+                                              style: TextStyle(
+                                                  fontFamily: "Terafik",
+                                                  color: Color.fromARGB(
+                                                      255, 84, 31, 49),
+                                                  fontWeight: FontWeight.bold)),
+                                          leading: Icon(
+                                            FontAwesomeIcons.chartArea,
+                                            color:
+                                                Color.fromARGB(255, 84, 31, 49),
+                                            textDirection: TextDirection.rtl,
+                                          ),
+                                        ),
+                                      )),
+                                  height: 45,
+                                ),
+                                Container(
+                                  child: new Directionality(
+                                      textDirection: TextDirection.rtl,
+                                      child: Theme(
+                                        data: ThemeData(
+                                          highlightColor:
+                                              Color.fromARGB(255, 221, 85, 153),
+                                        ),
+                                        child: ListTile(
+                                          title: Text(
+                                            "پرسش و پاسخ",
+                                            textDirection: TextDirection.rtl,
+                                            style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 84, 31, 49),
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          leading: Icon(
+                                            FontAwesomeIcons.questionCircle,
+                                            color:
+                                                Color.fromARGB(255, 84, 31, 49),
+                                            textDirection: TextDirection.rtl,
+                                          ),
+                                        ),
+                                      )),
+                                  height: 45,
+                                ),
+                                Container(
+                                  child: new Directionality(
+                                      textDirection: TextDirection.rtl,
+                                      child: Theme(
+                                        data: ThemeData(
+                                          highlightColor:
+                                              Color.fromARGB(255, 221, 85, 153),
+                                        ),
+                                        child: ListTile(
+                                          title: Text("نکات ورزشی ماهانه",
+                                              textDirection: TextDirection.rtl,
+                                              style: TextStyle(
+                                                  fontFamily: "Terafik",
+                                                  color: Color.fromARGB(
+                                                      255, 84, 31, 49),
+                                                  fontWeight: FontWeight.bold)),
+                                          leading: Icon(
+                                            FontAwesomeIcons.running,
+                                            color:
+                                                Color.fromARGB(255, 84, 31, 49),
+                                            textDirection: TextDirection.rtl,
+                                          ),
+                                        ),
+                                      )),
+                                  height: 45,
+                                ),
+                                //
+                                Container(
+                                  child: new Directionality(
+                                      textDirection: TextDirection.rtl,
+                                      child: Theme(
+                                        data: ThemeData(
+                                          highlightColor:
+                                              Color.fromARGB(255, 221, 85, 153),
+                                        ),
+                                        child: ListTile(
+                                          title: Text("توصیه های روانی",
+                                              textDirection: TextDirection.rtl,
+                                              style: TextStyle(
+                                                  fontFamily: "Terafik",
+                                                  color: Color.fromARGB(
+                                                      255, 84, 31, 49),
+                                                  fontWeight: FontWeight.bold)),
+                                          leading: Icon(
+                                            FontAwesomeIcons.universalAccess,
+                                            color:
+                                                Color.fromARGB(255, 84, 31, 49),
+                                            textDirection: TextDirection.rtl,
+                                          ),
+                                        ),
+                                      )),
+                                  height: 45,
+                                ),
+                                Container(
+                                  child: new Directionality(
+                                      textDirection: TextDirection.rtl,
+                                      child: Theme(
+                                        data: ThemeData(
+                                          highlightColor:
+                                              Color.fromARGB(255, 221, 85, 153),
+                                        ),
+                                        child: ListTile(
+                                          title: Text("ویژه پدران",
+                                              textDirection: TextDirection.rtl,
+                                              style: TextStyle(
+                                                  fontFamily: "Terafik",
+                                                  color: Color.fromARGB(
+                                                      255, 84, 31, 49),
+                                                  fontWeight: FontWeight.bold)),
+                                          leading: Icon(
+                                            FontAwesomeIcons.userTag,
+                                            color:
+                                                Color.fromARGB(255, 84, 31, 49),
+                                            textDirection: TextDirection.rtl,
+                                          ),
+                                        ),
+                                      )),
+                                  height: 45,
+                                ),
+                                Container(
+                                  height: 45,
+                                  child: new Directionality(
+                                      textDirection: TextDirection.rtl,
+                                      child: Theme(
+                                        data: ThemeData(
+                                          highlightColor:
+                                              Color.fromARGB(255, 221, 85, 153),
+                                        ),
+                                        child: ListTile(
+                                          title: Text("مراکز بهداشتی",
+                                              textDirection: TextDirection.rtl,
+                                              style: TextStyle(
+                                                  fontFamily: "Terafik",
+                                                  color: Color.fromARGB(
+                                                      255, 84, 31, 49),
+                                                  fontWeight: FontWeight.bold)),
+                                          leading: Icon(
+                                            FontAwesomeIcons.building,
+                                            color:
+                                                Color.fromARGB(255, 84, 31, 49),
+                                            textDirection: TextDirection.rtl,
+                                          ),
+                                        ),
+                                      )),
+                                ),
+                                new Directionality(
+                                    textDirection: TextDirection.rtl,
+                                    child: Theme(
+                                      data: ThemeData(
+                                        highlightColor:
+                                            Color.fromARGB(255, 221, 85, 153),
+                                      ),
+                                      child: ListTile(
+                                        title: Text("درباره",
+                                            textDirection: TextDirection.rtl,
+                                            style: TextStyle(
+                                                fontFamily: "Terafik",
+                                                color: Color.fromARGB(
+                                                    255, 84, 31, 49),
+                                                fontWeight: FontWeight.bold)),
+                                        leading: Icon(
+                                          FontAwesomeIcons.info,
+                                          color:
+                                              Color.fromARGB(255, 84, 31, 49),
+                                          textDirection: TextDirection.rtl,
+                                        ),
+                                      ),
+                                    )),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Container(
+                                  alignment: Alignment.bottomLeft,
+                                  margin:
+                                      EdgeInsets.only(left: 7.0, bottom: 4.0),
+                                  child: Text(
+                                    "نگارش اول_۱۳۹۸",
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            )
-          : null,
-      body: got,
+              )
+            : null,
+        body: got,
+      ),
     );
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:persian_datepicker/persian_datetime.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'AddWeight.dart';
 import 'LoadPage.dart';
@@ -8,7 +7,7 @@ import 'MotherPropoerties.dart';
 import 'DrawerDesign.dart';
 import 'Chart.dart';
 
-var scaffoldKey2 = GlobalKey<ScaffoldState>();
+var scaffoldKey1 = GlobalKey<ScaffoldState>();
 
 class MainPage extends StatefulWidget {
   final String intent;
@@ -31,9 +30,6 @@ class _MainPage extends State<MainPage> {
 
   @override
   void initState() {
-    print("asfsfdsfsdfds");
-    // TODO: implement initState
-    super.initState();
     setState(() {
       getData();
       setWeek();
@@ -42,6 +38,12 @@ class _MainPage extends State<MainPage> {
       setStatus();
       Chart();
     });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   Future<void> setWeek() async {
@@ -117,21 +119,21 @@ class _MainPage extends State<MainPage> {
 
   Future<void> setStatus() async {
     final pref = await SharedPreferences.getInstance();
-    String lastDate = pref.getString('date');
-    print('Last date $lastDate');
-    PersianDateTime lastDates = PersianDateTime(jalaaliDateTime: lastDate);
-    PersianDateTime nowDates = PersianDateTime();
-    int numberWeek = (nowDates.difference(lastDates).inDays / 7).toInt();
-    if (numberWeek % 7 != 0 || numberWeek == 0) numberWeek++;
-    String w = 'week' + numberWeek.toString();
-    List<String> list = pref.getStringList(w);
+    // String lastDate = pref.getString('date');
+    // print('Last date $lastDate');
+    // PersianDateTime lastDates = PersianDateTime(jalaaliDateTime: lastDate);
+    // PersianDateTime nowDates = PersianDateTime();
+    // int numberWeek = (nowDates.difference(lastDates).inDays / 7).toInt();
+    // if (numberWeek % 7 != 0 || numberWeek == 0) numberWeek++;
+    // String w = 'week' + numberWeek.toString();
+
+    String lastW = pref.getString('lastWeek');
+    List<String> list = pref.getStringList('week' + lastW);
     MotherProperties motherProperties = await loadProfileData();
     int number = motherProperties.number;
     setState(() {
       if (number == 1) {
-        if (double.parse(growing) == 0.0)
-          status = 'ثابت';
-        else if (double.parse(growing) >= double.parse(list[0]) &&
+        if (double.parse(growing) >= double.parse(list[0]) &&
             double.parse(growing) <= double.parse(list[1]))
           status = 'کم وزن';
         else if (double.parse(growing) >= double.parse(list[2]) &&
@@ -140,38 +142,30 @@ class _MainPage extends State<MainPage> {
         else if (double.parse(growing) >= double.parse(list[4]) &&
             double.parse(growing) <= double.parse(list[5]))
           status = 'اضافه وزن';
-        else if (double.parse(growing) >= double.parse(list[6]) &&
-            double.parse(growing) <= double.parse(list[7]))
-          status = 'چاق';
         else
-          status = 'نامتعارف';
+          status = 'چاق';
       } else if (number == 2) {
-        if (double.parse(growing) == 0.0)
-          status = 'ثابت';
-        else if (double.parse(growing) >= double.parse(list[8]) &&
+        if (double.parse(growing) >= double.parse(list[8]) &&
             double.parse(growing) <= double.parse(list[9]))
           status = 'طبیعی';
         else if (double.parse(growing) >= double.parse(list[10]) &&
             double.parse(growing) <= double.parse(list[11]))
           status = 'اضافه وزن';
-        else if (double.parse(growing) >= double.parse(list[12]) &&
-            double.parse(growing) <= double.parse(list[13]))
-          status = 'چاق';
         else
-          status = 'نامتعارف';
+          status = 'چاق';
       }
     });
   }
 
   Container chart() {
     return Container(
-      margin: EdgeInsets.only(left: 16, right: 16, top: 12.0, bottom: 12.0),
+      margin: EdgeInsets.only(left: 32, right: 32, top: 24.0, bottom: 12.0),
       child: Container(
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(12.0),
           ),
-          height: 300.0,
+          height: 270.0,
           child: Column(
             children: <Widget>[
               Expanded(
@@ -211,59 +205,48 @@ class _MainPage extends State<MainPage> {
       children: <Widget>[
         Container(
             margin: EdgeInsets.only(right: 8.0, left: 8.0),
-            child: new Material(
-              child: IconButton(
-                highlightColor: Color.fromARGB(255, 45, 34, 22),
-                onPressed: () {
-                  scaffoldKey2.currentState.openEndDrawer();
-                },
-                icon: new Icon(
-                  FontAwesomeIcons.alignRight,
-                  color: Colors.white,
-                ),
+            child: new IconButton(
+              highlightColor: Color.fromARGB(255, 45, 34, 22),
+              onPressed: () {
+                scaffoldKey1.currentState.openEndDrawer();
+              },
+              icon: new Icon(
+                FontAwesomeIcons.alignRight,
+                color: Colors.white,
               ),
-              type: MaterialType.transparency,
             )),
         Expanded(
           child: Text(
-            "راهنمای آموزشی و مراقبتی مادران باردار",
+            "راهنمای آموزشی و \n\nمراقبتی مادران باردار",
             textDirection: TextDirection.rtl,
             textAlign: TextAlign.center,
             style: TextStyle(
-                fontSize: 16,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
-                fontFamily: "Terafik"),
+                fontFamily: "Terafik",
+                color: Colors.white),
           ),
         ),
         Container(
-          margin: EdgeInsets.only(right: 8.0, left: 8.0),
-          child: Container(
-            child: Image.asset(
-              "assets/logo.png",
-              fit: BoxFit.cover,
-            ),
-            width: 30,
-            height: 30,
-          ),
-        ),
+            margin: EdgeInsets.only(right: 8.0, left: 16.0),
+            child: Container(
+              child: Image.asset(
+                "assets/logo.png",
+                fit: BoxFit.fill,
+              ),
+              width: 30,
+              height: 30,
+            )),
       ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
-//    if(intetn=="addweight")
-//      {
-//        setState(() {
-//          chart();
-//        });
-//      }
-
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: true,
       home: Scaffold(
-        key: scaffoldKey2,
+        key: scaffoldKey1,
         endDrawer: DrawerDesign(),
         body: Stack(
           children: <Widget>[
@@ -286,7 +269,7 @@ class _MainPage extends State<MainPage> {
                       children: <Widget>[
                         chart(),
                         Container(
-                          margin: EdgeInsets.only(right: 16, left: 16, top: 12),
+                          margin: EdgeInsets.only(right: 32, left: 32, top: 8),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8.0),
                               color: Colors.white.withOpacity(0.5),
@@ -346,7 +329,7 @@ class _MainPage extends State<MainPage> {
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.only(right: 16, left: 16, top: 12),
+                          margin: EdgeInsets.only(right: 32, left: 32, top: 8),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8.0),
                               color: Colors.white.withOpacity(0.5),
@@ -407,7 +390,7 @@ class _MainPage extends State<MainPage> {
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.only(right: 16, left: 16, top: 12),
+                          margin: EdgeInsets.only(right: 32, left: 32, top: 8),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8.0),
                               color: Colors.white.withOpacity(0.5),
@@ -467,7 +450,7 @@ class _MainPage extends State<MainPage> {
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.only(right: 16, left: 16, top: 12),
+                          margin: EdgeInsets.only(right: 32, left: 32, top: 8),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8.0),
                               color: Colors.white.withOpacity(0.5),
@@ -526,8 +509,7 @@ class _MainPage extends State<MainPage> {
                           ),
                         ),
                         Container(
-                          margin:
-                              EdgeInsets.only(left: 16.0, right: 16.0, top: 16),
+                          margin: EdgeInsets.only(right: 32, left: 32, top: 8),
                           child: Row(
                             textDirection: TextDirection.rtl,
                             children: <Widget>[

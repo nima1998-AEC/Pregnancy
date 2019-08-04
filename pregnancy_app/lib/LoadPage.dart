@@ -769,37 +769,33 @@ class _LoadPage extends State<LoadPage> {
   @override
   Widget build(BuildContext context) {
     loadProfileData();
-    Future.delayed(
-        Duration(seconds: 1),
-            (){
-          setState(() {
-            runAnimation = true;
-          });
-        }
-    );
+    Future.delayed(Duration(seconds: 1), () {
+      setState(() {
+        runAnimation = true;
+      });
+    });
 
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: true,
         home: GestureDetector(
           child: Scaffold(
             body: Container(
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage(
-                        "assets/LoadPage.png",
-                      ),
-                      fit: BoxFit.fill,
-                    )),
+                  image: AssetImage(
+                    "assets/LoadPage.png",
+                  ),
+                  fit: BoxFit.fill,
+                )),
 //          width: MediaQuery.of(context).size.width,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-
                     AnimatedContainer(
                       duration: Duration(seconds: 1),
                       decoration: BoxDecoration(
-                          image:
-                          DecorationImage(image: AssetImage('assets/header.png'))),
+                          image: DecorationImage(
+                              image: AssetImage('assets/header.png'))),
                       curve: Curves.fastOutSlowIn,
                       height: runAnimation ? 120 : 0,
                     ),
@@ -808,8 +804,8 @@ class _LoadPage extends State<LoadPage> {
                         seconds: 1,
                       ),
                       decoration: BoxDecoration(
-                          image:
-                          DecorationImage(image: AssetImage('assets/footer.png'))),
+                          image: DecorationImage(
+                              image: AssetImage('assets/footer.png'))),
                       curve: Curves.fastOutSlowIn,
                       height: runAnimation ? 60 : 0,
                     ),
