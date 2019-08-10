@@ -1,4 +1,3 @@
-
 class MotherProperties {
   final String name;
   final int age, number;

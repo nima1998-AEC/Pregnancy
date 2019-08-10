@@ -5,8 +5,13 @@ import 'package:persian_datepicker/persian_datepicker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'AddWeight.dart';
 import 'HistoryPage.dart';
-import 'MotherPropoerties.dart';
+import 'package:pregnancy_app/Model/MotherPropoerties.dart';
 import 'LoadPage.dart';
+
+MotherProperties motherProperties;
+MotherProperties mom;
+
+bool notNull = false;
 
 final nameController = TextEditingController();
 final ageController = TextEditingController();
@@ -14,9 +19,6 @@ final heightController = TextEditingController();
 final weightController = TextEditingController();
 final dateController = TextEditingController();
 final numberController = TextEditingController();
-bool notNull = false;
-MotherProperties motherProperties;
-MotherProperties mom;
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -28,8 +30,8 @@ class _ProfilePage extends State<ProfilePage> {
   double bmi;
   String status = '';
 
-  Future<void> _saveProfileData(BuildContext context, String name, int age,
-      double height, double weight, String date, int number) async {
+  Future<void> _saveProfileData(String name, int age, double height,
+      double weight, String date, int number) async {
     final pref = await SharedPreferences.getInstance();
     double bmi = weight / (height * height);
     pref.setString('name', name);
@@ -45,8 +47,6 @@ class _ProfilePage extends State<ProfilePage> {
     List<String> list = ['1', weight.toString(), date];
     pref.setStringList('1', list);
     pref.setDouble('lastChange', 0.0);
-
-    Navigator.pushReplacementNamed(context, '/MainPage');
   }
 
   void _loadBmiStatus() async {
@@ -101,7 +101,7 @@ class _ProfilePage extends State<ProfilePage> {
     });
   }
 
-  void _validation(BuildContext context) {
+  void _validation(BuildContext context) async {
     if (nameController.text.isEmpty ||
         ageController.text.isEmpty ||
         heightController.text.isEmpty ||
@@ -113,8 +113,8 @@ class _ProfilePage extends State<ProfilePage> {
         backgroundColor: Color.fromARGB(255, 218, 86, 152).withOpacity(0.8),
       );
     } else {
+      Navigator.pushReplacementNamed(context, '/MainPage');
       _saveProfileData(
-        context,
         nameController.text,
         int.parse(ageController.text),
         double.parse(heightController.text),
@@ -137,10 +137,7 @@ class _ProfilePage extends State<ProfilePage> {
     });
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _setMotherData();
+  persianDatePickerWidget() {
     persianDatePicker = PersianDatePicker(
       headerTodayBackgroundColor: Colors.pink[100],
       currentDayBackgroundColor: Colors.pink[100],
@@ -156,6 +153,13 @@ class _ProfilePage extends State<ProfilePage> {
       selectedDayBackgroundColor: Color.fromARGB(255, 218, 86, 152),
       controller: dateController,
     ).init();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    persianDatePickerWidget();
+    _setMotherData();
     _loadBmiStatus();
   }
 

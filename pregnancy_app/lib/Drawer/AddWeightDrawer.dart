@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'AddWeight.dart';
-import 'ProfilePage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'HistoryPage.dart';
+import 'package:pregnancy_app/HistoryPage.dart';
+import 'package:pregnancy_app/ProfilePage.dart';
 
-class DrawerDesign extends StatefulWidget {
-  DrawerDesignState createState() => DrawerDesignState();
+class AddWeightDrawer extends StatefulWidget {
+  _AddWeightDrawer createState() => _AddWeightDrawer();
 }
 
-class DrawerDesignState extends State<DrawerDesign> {
+class _AddWeightDrawer extends State<AddWeightDrawer> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -71,7 +70,7 @@ class DrawerDesignState extends State<DrawerDesign> {
                             ),
                             child: ListTile(
                               title: Text(
-                                "ثبت وزن هفتگی",
+                                "مشاهده روند رشد",
                                 textDirection: TextDirection.rtl,
                                 style: TextStyle(
                                     fontFamily: "Terafik",
@@ -88,42 +87,11 @@ class DrawerDesignState extends State<DrawerDesign> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (BuildContext context) =>
-                                            AddWeight()));
+                                            HistoryPage()));
                               },
                             ),
                           ),
                         ),
-                        height: 45,
-                      ),
-                      Container(
-                        child: new Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: Theme(
-                              data: ThemeData(
-                                highlightColor:
-                                    Color.fromARGB(255, 221, 85, 153),
-                              ),
-                              child: ListTile(
-                                title: Text("مشاهده روند رشد",
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(
-                                        fontFamily: "Terafik",
-                                        color: Color.fromARGB(255, 84, 31, 49),
-                                        fontWeight: FontWeight.bold)),
-                                leading: Icon(
-                                  FontAwesomeIcons.solidFolderOpen,
-                                  color: Color.fromARGB(255, 84, 31, 49),
-                                  textDirection: TextDirection.rtl,
-                                ),
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              HistoryPage()));
-                                },
-                              ),
-                            )),
                         height: 45,
                       ),
                       Container(
@@ -328,7 +296,7 @@ class DrawerDesignState extends State<DrawerDesign> {
                             color: Colors.grey,
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ],

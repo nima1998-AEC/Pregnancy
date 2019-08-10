@@ -1,9 +1,7 @@
 import 'dart:async';
-import 'MotherPropoerties.dart';
+import 'package:pregnancy_app/Model/MotherPropoerties.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-Widget sik;
 
 Future<void> _saveTable(
     BuildContext context, String week, List<String> data) async {
@@ -19,7 +17,7 @@ Future<List<String>> loadTable(String week) async {
 }
 
 Future<MotherProperties> loadProfileData() async {
-  MotherProperties motherProperties;
+  MotherProperties momProperties;
   final prefs = await SharedPreferences.getInstance();
   String date = prefs.getString('date');
   String name = prefs.getString('name');
@@ -30,7 +28,7 @@ Future<MotherProperties> loadProfileData() async {
   double height = prefs.getDouble('height');
   double weight = prefs.getDouble('weight');
   double bmi = prefs.getDouble('bmi');
-  motherProperties = new MotherProperties(
+  momProperties = new MotherProperties(
     name: name,
     age: age,
     weight: weight,
@@ -39,17 +37,8 @@ Future<MotherProperties> loadProfileData() async {
     date: date,
     bmi: bmi,
   );
-
-//  print(name);
-//  print(age);
-//  print(height);
-//  print(weight);
-//  print(date);
-//  print(number);
-  return motherProperties;
+  return momProperties;
 }
-
-void main() => runApp(LoadPage());
 
 class LoadPage extends StatefulWidget {
   @override
@@ -57,27 +46,93 @@ class LoadPage extends StatefulWidget {
 }
 
 class _LoadPage extends State<LoadPage> {
+  MotherProperties motherProperties;
+  bool runAnimation = false;
+
+  @override
+  void initState() {
+    super.initState();
+    startTime();
+    loadProfileData();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Future.delayed(Duration(milliseconds: 800), () {
+      setState(() {
+        runAnimation = true;
+      });
+    });
+
+    return MaterialApp(
+      debugShowCheckedModeBanner: true,
+      home: GestureDetector(
+        child: Scaffold(
+          body: Container(
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                image: AssetImage(
+                  "assets/LoadPage.png",
+                ),
+                fit: BoxFit.fill,
+              )),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  AnimatedContainer(
+                    duration: Duration(seconds: 1),
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage('assets/header.png'))),
+                    curve: Curves.fastOutSlowIn,
+                    height: runAnimation ? 120 : 0,
+                  ),
+                  AnimatedContainer(
+                    duration: Duration(
+                      seconds: 1,
+                    ),
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage('assets/footer.png'))),
+                    curve: Curves.fastOutSlowIn,
+                    height: runAnimation ? 60 : 0,
+                  ),
+                ],
+              )),
+        ),
+      ),
+    );
+  }
+
   startTime() async {
     var _duration = new Duration(milliseconds: 3000);
     return new Timer(_duration, navigationPage);
   }
 
   void navigationPage() async {
-    await setDatas();
+    loadProfileData().then((mom) {
+      motherProperties = mom;
+      if (motherProperties.date != null &&
+          motherProperties.number != null &&
+          motherProperties.height != null &&
+          motherProperties.weight != null &&
+          motherProperties.age != null &&
+          motherProperties.name != null) {
+        debugPrint("user already saved");
+        Navigator.of(context).pushReplacementNamed('/MainPage');
+      } else {
+        debugPrint("user not saved");
+        Navigator.of(context).pushReplacementNamed('/ProfilePage');
+      }
+    });
 
-    MotherProperties motherProperties = await loadProfileData();
-    if (motherProperties.date != null &&
-        motherProperties.number != null &&
-        motherProperties.height != null &&
-        motherProperties.weight != null &&
-        motherProperties.age != null &&
-        motherProperties.name != null) {
-      print("user already saved");
-      Navigator.of(context).pushReplacementNamed('/MainPage');
-    } else {
-      print("user not saved");
-      Navigator.of(context).pushReplacementNamed('/ProfilePage');
-    }
+    List<String> data = await loadTable('week41');
+    if (data == null) await setDatas();
   }
 
   Future setDatas() async {
@@ -129,7 +184,6 @@ class _LoadPage extends State<LoadPage> {
       '0.32',
       '0.4',
     ], 'week3');
-
     await tableData([
       '0.12',
       '0.7',
@@ -194,7 +248,6 @@ class _LoadPage extends State<LoadPage> {
       '0.85',
       '1.25',
     ], 'week7');
-
     await tableData([
       '0.28',
       '1.25',
@@ -211,7 +264,6 @@ class _LoadPage extends State<LoadPage> {
       '1.0',
       '1.50',
     ], 'week8');
-
     await tableData([
       '0.32',
       '1.37',
@@ -244,7 +296,6 @@ class _LoadPage extends State<LoadPage> {
       '1.2',
       '1.9',
     ], 'week10');
-
     await tableData([
       '0.4',
       '1.68',
@@ -293,7 +344,6 @@ class _LoadPage extends State<LoadPage> {
       '1.5',
       '2.5',
     ], 'week13');
-
     await tableData([
       '0.5',
       '2.0',
@@ -310,7 +360,6 @@ class _LoadPage extends State<LoadPage> {
       '1.5',
       '2.5',
     ], 'week14');
-
     await tableData([
       '1.3',
       '3.0',
@@ -327,7 +376,6 @@ class _LoadPage extends State<LoadPage> {
       '2.2',
       '3.6',
     ], 'week15');
-
     await tableData([
       '1.7',
       '3.5',
@@ -344,7 +392,6 @@ class _LoadPage extends State<LoadPage> {
       '2.55',
       '4.15',
     ], 'week16');
-
     await tableData([
       '2.1',
       '4.0',
@@ -617,7 +664,6 @@ class _LoadPage extends State<LoadPage> {
       '8.4',
       '14.2',
     ], 'week33');
-
     await tableData([
       '9.2',
       '14.5',
@@ -751,67 +797,10 @@ class _LoadPage extends State<LoadPage> {
   Future tableData(List<String> dataSet, String week) async {
     List<String> data = await loadTable(week);
     if (data != null) {
-      print(week + ' : ' + data.toString());
+      debugPrint(week + ' : ' + data.toString());
     } else {
       _saveTable(context, week, dataSet);
-      print(week + ' : ' + dataSet.toString() + 'Saved');
+      debugPrint(week + ' : ' + dataSet.toString() + 'Saved');
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    startTime();
-  }
-
-  bool runAnimation = false;
-
-  @override
-  Widget build(BuildContext context) {
-    loadProfileData();
-    Future.delayed(Duration(seconds: 1), () {
-      setState(() {
-        runAnimation = true;
-      });
-    });
-
-    return MaterialApp(
-        debugShowCheckedModeBanner: true,
-        home: GestureDetector(
-          child: Scaffold(
-            body: Container(
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                  image: AssetImage(
-                    "assets/LoadPage.png",
-                  ),
-                  fit: BoxFit.fill,
-                )),
-//          width: MediaQuery.of(context).size.width,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    AnimatedContainer(
-                      duration: Duration(seconds: 1),
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage('assets/header.png'))),
-                      curve: Curves.fastOutSlowIn,
-                      height: runAnimation ? 120 : 0,
-                    ),
-                    AnimatedContainer(
-                      duration: Duration(
-                        seconds: 1,
-                      ),
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage('assets/footer.png'))),
-                      curve: Curves.fastOutSlowIn,
-                      height: runAnimation ? 60 : 0,
-                    ),
-                  ],
-                )),
-          ),
-        ));
   }
 }

@@ -1,21 +1,16 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'HistoryPage.dart';
-
-List<String> min;
-
-List<String> max;
-
-List<int> weekIndex;
-
-List<String> table = new List<String>();
-List<WeekInformationBar> data;
-
-List<WeekInformationBar> data1;
+import 'WeekInformationBar.dart';
 
 String weight = '';
 String growing = '';
+List<String> min;
+List<String> max;
+List<int> weekIndex;
+List<String> table = new List<String>();
+List<WeekInformationBar> data;
+List<WeekInformationBar> data1;
 List<String> weeks = [
   'هفته اول',
   'هفته دوم',
@@ -79,7 +74,6 @@ Future<void> getData() async {
         weight: double.parse(list[1]).toStringAsFixed(1),
       );
       data.add(wib);
-      print(list);
       weekIndex.add(int.parse(list[0]));
     }
     i++;
@@ -115,35 +109,6 @@ Future<void> getData() async {
         }
       }
     }
-//    for (int i = 0; i < 41; i++) {
-//      List<String> row = sp.getStringList("week" + (i + 1).toString());
-//      if (number == 1) {
-//        if (bmi < 20) {
-//          min.add(row[0]);
-//          max.add(row[1]);
-//        } else if (bmi >= 20 && bmi < 25) {
-//          min.add(row[2]);
-//          max.add(row[3]);
-//        } else if (bmi >= 25 && bmi < 27) {
-//          min.add(row[4]);
-//          max.add(row[5]);
-//        } else if (bmi >= 27) {
-//          min.add(row[6]);
-//          max.add(row[7]);
-//        }
-//      } else if (number == 2) {
-//        if (bmi >= 20 && bmi < 25) {
-//          min.add(row[8]);
-//          max.add(row[9]);
-//        } else if (bmi >= 25 && bmi < 27) {
-//          min.add(row[10]);
-//          max.add(row[11]);
-//        } else if (bmi >= 27) {
-//          min.add(row[12]);
-//          max.add(row[13]);
-//        }
-//      }
-//    }
   }
 
   for (int i = 0; i < data.length; i++) {
@@ -162,15 +127,9 @@ Future<void> getData() async {
         weight: data[i].weight + 'کیلوگرم',
         difference: diff.toStringAsFixed(2).toString(),
       );
-
-//      weekIndex.add();
       data1.add(wib);
     }
-    print(data1[i].difference);
   }
-  print('MIN : $min');
-  print('MAX : $max');
-  print('Week_index : $weekIndex');
 }
 
 class Chart extends StatefulWidget {
@@ -180,53 +139,31 @@ class Chart extends StatefulWidget {
 
 class _Chart extends State<Chart> {
   @override
-  void initState() {
-    super.initState();
-    setState(() {
-      getData().whenComplete(() {
-        NumericComboLinePointChart.withSampleData();
-      });
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     setState(() {
       _createSampleData();
       getData();
     });
-
     return NumericComboLinePointChart.withSampleData();
   }
 }
 
 List<charts.Series<WeekWeight, double>> _createSampleData() {
-  List<WeekWeight> myFakeDesktopData = new List<WeekWeight>();
-  List<WeekWeight> myFakeTabletData = new List<WeekWeight>();
-  List<WeekWeight> myFakeMobileData = new List<WeekWeight>();
-//  getData();
+  List<WeekWeight> downLine = new List<WeekWeight>();
+  List<WeekWeight> midLine = new List<WeekWeight>();
+  List<WeekWeight> upLine = new List<WeekWeight>();
 
-  myFakeDesktopData.add(new WeekWeight(0.0, double.parse(min[0])));
-  myFakeMobileData.add(new WeekWeight(0.0, double.parse(max[0])));
+  downLine.add(new WeekWeight(0.0, double.parse(min[0])));
+  upLine.add(new WeekWeight(0.0, double.parse(max[0])));
 
-  myFakeDesktopData.add(new WeekWeight(13.0, double.parse(min[1])));
-  myFakeMobileData.add(new WeekWeight(13.0, double.parse(max[1])));
+  downLine.add(new WeekWeight(13.0, double.parse(min[1])));
+  upLine.add(new WeekWeight(13.0, double.parse(max[1])));
 
-  myFakeDesktopData.add(new WeekWeight(26.0, double.parse(min[2])));
-  myFakeMobileData.add(new WeekWeight(26.0, double.parse(max[2])));
+  downLine.add(new WeekWeight(26.0, double.parse(min[2])));
+  upLine.add(new WeekWeight(26.0, double.parse(max[2])));
 
-  myFakeDesktopData.add(new WeekWeight(40.0, double.parse(min[3])));
-  myFakeMobileData.add(new WeekWeight(40.0, double.parse(max[3])));
-
-//  for (int i = 0; i < 4; i++) {
-//    if (i == 0) {
-//      WeekWeight w = new WeekWeight(0.0, double.parse(min[i]));
-//      myFakeDesktopData.add(w);
-//
-//      WeekWeight w2 = new WeekWeight(0.0, double.parse(max[i]));
-//      myFakeMobileData.add(w2);
-//    }
-//  }
+  downLine.add(new WeekWeight(40.0, double.parse(min[3])));
+  upLine.add(new WeekWeight(40.0, double.parse(max[3])));
 
   for (int i = 0; i < weekIndex.length; i++) {
     WeekWeight w1 = new WeekWeight(
@@ -235,7 +172,7 @@ List<charts.Series<WeekWeight, double>> _createSampleData() {
         data1[i].difference.toString(),
       ),
     );
-    myFakeTabletData.add(w1);
+    midLine.add(w1);
   }
 
   return [
@@ -244,7 +181,7 @@ List<charts.Series<WeekWeight, double>> _createSampleData() {
       colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
       domainFn: (WeekWeight weekWeight, _) => weekWeight.week,
       measureFn: (WeekWeight weekWeight, _) => weekWeight.weight,
-      data: myFakeDesktopData,
+      data: downLine,
     ),
     new charts.Series<WeekWeight, double>(
       id: 'Mid',
@@ -252,14 +189,14 @@ List<charts.Series<WeekWeight, double>> _createSampleData() {
       areaColorFn: (_, __) => charts.MaterialPalette.red.shadeDefault.lighter,
       domainFn: (WeekWeight weekWeight, _) => weekWeight.week,
       measureFn: (WeekWeight weekWeight, _) => weekWeight.weight,
-      data: myFakeTabletData,
+      data: midLine,
     ),
     new charts.Series<WeekWeight, double>(
       id: 'Up',
       colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
       domainFn: (WeekWeight weekWeight, _) => weekWeight.week,
       measureFn: (WeekWeight weekWeight, _) => weekWeight.weight,
-      data: myFakeMobileData,
+      data: upLine,
     ),
   ];
 }
@@ -281,46 +218,21 @@ class NumericComboLinePointChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new charts.NumericComboChart(seriesList,
-        animate: animate,
-        // Configure the default renderer as a line renderer. This will be used
-        // for any series that does not define a rendererIdKey.
-        defaultRenderer: new charts.LineRendererConfig(),
-        // Custom renderer configuration for the point series.
-        customSeriesRenderers: [
-          new charts.PointRendererConfig(
-              // ID used to link series to this renderer.
-              customRendererId: 'customPoint')
-        ]);
+    return new charts.NumericComboChart(
+      seriesList,
+      animate: animate,
+      // Configure the default renderer as a line renderer. This will be used
+      // for any series that does not define a rendererIdKey.
+      defaultRenderer: new charts.LineRendererConfig(),
+      // Custom renderer configuration for the point series.
+      customSeriesRenderers: [
+        new charts.PointRendererConfig(
+            // ID used to link series to this renderer.
+            customRendererId: 'customPoint'),
+      ],
+    );
   }
 }
-//class StackedAreaCustomColorLineChart extends StatelessWidget {
-//  final List<charts.Series> seriesList;
-//  final bool animate;
-//
-//  StackedAreaCustomColorLineChart(this.seriesList, {this.animate});
-//
-//  factory StackedAreaCustomColorLineChart.withSampleData() {
-//    return new StackedAreaCustomColorLineChart(
-//      _createSampleData(),
-//      // Disable animations for image tests.
-//      animate: false,
-//    );
-//  }
-//
-//  @override
-//  Widget build(BuildContext context) {
-//    return new charts.LineChart(seriesList,
-//        defaultRenderer: new charts.LineRendererConfig(
-//          includeArea: true,
-//          stacked: true,
-//          includeLine: true,
-//          includePoints: false,
-//          strokeWidthPx: 5,
-//        ),
-//        animate: animate);
-//  }
-//}
 
 class WeekWeight {
   final double week;
