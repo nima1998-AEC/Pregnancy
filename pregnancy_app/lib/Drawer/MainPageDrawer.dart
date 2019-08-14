@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:pregnancy_app/AddWeight.dart';
-import 'package:pregnancy_app/HistoryPage.dart';
-import 'package:pregnancy_app/ProfilePage.dart';
+import 'package:pregnancy_app/Design/AddWeightPageDesign.dart';
+import 'package:pregnancy_app/Design/HistoryPageDesign.dart';
+import 'package:pregnancy_app/Design/ProfilePageDesign.dart';
 
 class MainPageDrawer extends StatefulWidget {
   _MainPageDrawer createState() => _MainPageDrawer();
@@ -18,11 +18,12 @@ class _MainPageDrawer extends State<MainPageDrawer> {
           children: <Widget>[
             Container(
               decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage(
-                        "assets/DrawerHeader.png",
-                      ),
-                      fit: BoxFit.fill)),
+                image: DecorationImage(
+                    image: AssetImage(
+                      "assets/DrawerHeader.png",
+                    ),
+                    fit: BoxFit.fill),
+              ),
               height: MediaQuery.of(context).size.height * 0.32,
             ),
             Expanded(
@@ -85,10 +86,12 @@ class _MainPageDrawer extends State<MainPageDrawer> {
                               ),
                               onTap: () {
                                 Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            AddWeight()));
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        AddWeightPage(),
+                                  ),
+                                );
                               },
                             ),
                           ),

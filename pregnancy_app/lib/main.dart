@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'MainPage.dart';
-import 'LoadPage.dart';
-import 'ProfilePage.dart';
 import 'package:flutter/services.dart';
+import 'package:pregnancy_app/Design/LoadPageDesign.dart';
+
+import 'package:pregnancy_app/Design/MainPageDesign.dart';
+import 'package:pregnancy_app/Design/ProfilePageDesign.dart';
 
 void main() => runApp(MyApp());
 
@@ -16,6 +17,7 @@ class _MyApp extends State<MyApp> {
   void initState() {
     super.initState();
   }
+
 
 //   firstOpenChecker() async {
 //     DateTime now, secondNow;
@@ -46,7 +48,7 @@ class _MyApp extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
-        '/MainPage': (BuildContext context) => new MainPage(),
+        '/MainPageDesign': (BuildContext context) => new MainPage(),
         '/ProfilePage': (BuildContext context) => new ProfilePage(),
       },
       home: Scaffold(

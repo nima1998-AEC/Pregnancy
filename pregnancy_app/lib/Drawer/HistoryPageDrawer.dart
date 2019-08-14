@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:pregnancy_app/ProfilePage.dart';
-import 'package:pregnancy_app/AddWeight.dart';
+import 'package:pregnancy_app/Design/ProfilePageDesign.dart';
+import 'package:pregnancy_app/Design/AddWeightPageDesign.dart';
 
 class HistoryPageDrawer extends StatefulWidget {
   _HistoryPageDrawer createState() => _HistoryPageDrawer();
@@ -84,10 +84,12 @@ class _HistoryPageDrawer extends State<HistoryPageDrawer> {
                               ),
                               onTap: () {
                                 Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            AddWeight()));
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        AddWeightPage(),
+                                  ),
+                                );
                               },
                             ),
                           ),

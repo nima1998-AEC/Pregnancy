@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:pregnancy_app/HistoryPage.dart';
-import 'package:pregnancy_app/ProfilePage.dart';
+import 'package:pregnancy_app/Design/HistoryPageDesign.dart';
+import 'package:pregnancy_app/Design/ProfilePageDesign.dart';
 
 class AddWeightDrawer extends StatefulWidget {
   _AddWeightDrawer createState() => _AddWeightDrawer();

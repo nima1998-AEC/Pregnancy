@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:pregnancy_app/Drawer/HistoryPageDrawer.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'WeekInformationBar.dart';
+
+import 'package:pregnancy_app/Drawer/HistoryPageDrawer.dart';
+import 'package:pregnancy_app/Source/HistoryPageSource.dart';
+import 'package:pregnancy_app/Source/Other.dart';
 
 Widget row(String weekNumber, String weight, String deference) {
   return Container(
@@ -101,84 +102,43 @@ class HistoryPage extends StatefulWidget {
 class _HistoryPage extends State<HistoryPage> {
   var scaffoldKey3 = GlobalKey<ScaffoldState>();
 
-  List<WeekInformationBar> data = new List<WeekInformationBar>();
-  List<WeekInformationBar> data1 = new List<WeekInformationBar>();
   String week = '';
   String weight = '';
   String growing = '';
-  List<String> weeks = [
-    'هفته اول',
-    'هفته دوم',
-    'هفته سوم',
-    'هفته چهارم',
-    'هفته پنجم',
-    'هفته ششم',
-    'هفته هفتم',
-    'هفته هشتم',
-    'هفته نهم',
-    'هفته دهم',
-    'هفته یازدهم',
-    'هفته دوازدهم',
-    'هفته سیزدهم',
-    'هفته چهاردهم',
-    'هفته پانزدهم',
-    'هفته شانزدهم',
-    'هفته هفدهم',
-    'هفته هجدهم',
-    'هفته نوزدهم',
-    'هفته بیستم',
-    'هفته بیست و یکم',
-    'هفته بیست و دوم',
-    'هفته بیست و سوم',
-    'هفته بیست و چهارم',
-    'هفته بیست و پنجم',
-    'هفته بیست و ششم',
-    'هفته بیست و هفتم',
-    'هفته بیست و هشتم',
-    'هفته بیست و نهم',
-    'هفته سی ام',
-    'هفته سی و یکم',
-    'هفته سی و دوم',
-    'هفته سی و سوم',
-    'هفته سی و چهارم',
-    'هفته سی و پنجم',
-    'هفته سی و ششم',
-    'هفته سی و هفتم',
-    'هفته سی و هشتم',
-    'هفته سی و نهم',
-    'هفته چهلم',
-    'هفته چهل و یکم',
-  ];
 
+  bool listFlag = false;
   @override
   void initState() {
     super.initState();
-    setWeek();
-    setWeight();
-    setGrowing();
-    setState(() {
-      getWeeks().whenComplete(() {
-        list = ListView.builder(
-          itemBuilder: (BuildContext context, int index) {
-            return Container(
-              margin: EdgeInsets.only(left: 16, right: 16.0),
-              child: row(
-                data[index].weekNumber.toString(),
-                data1[index].weight.toString(),
-                data1[index].difference.toString(),
-              ),
-            );
-          },
-          itemCount: data1.length,
-        );
-      });
+
+    debugPrint('call Functions in History Page ...');
+    callFunctions();
+    getWeeks().then((onValue) {
+      if (onValue.length > 0) {
+        setState(() {
+          list = ListView.builder(
+            itemBuilder: (BuildContext context, int index) {
+              return new Container(
+                child: row(
+                  onValue[index].weekNumber.toString(),
+                  onValue[index].weight.toString(),
+                  onValue[index].difference.toString(),
+                ),
+              );
+            },
+            itemCount: onValue.length,
+          );
+
+          listFlag = true;
+        });
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: true,
+      debugShowCheckedModeBanner: debugBanner(),
       home: Scaffold(
         key: scaffoldKey3,
         endDrawer: HistoryPageDrawer(),
@@ -194,9 +154,9 @@ class _HistoryPage extends State<HistoryPage> {
               SizedBox(
                 height: 25.0,
               ),
-              appBar(),
+              appBar(scaffoldKey3),
               Container(
-                margin: EdgeInsets.only(left: 32, right: 32, top: 32),
+                margin: EdgeInsets.only(left: 16, right: 16, top: 32),
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.black12),
                     color: Color.fromARGB(255, 255, 255, 255),
@@ -334,7 +294,7 @@ class _HistoryPage extends State<HistoryPage> {
                 ),
               ),
               Expanded(
-                child: list,
+                child: listFlag ? list : Container(),
               ),
             ],
           ),
@@ -343,107 +303,17 @@ class _HistoryPage extends State<HistoryPage> {
     );
   }
 
-  Future<void> setWeek() async {
-    final pref = await SharedPreferences.getInstance();
-    String lastWeek = pref.getString('lastWeek');
+  void callFunctions() async {
+    String _week, _weight, _growing;
+
+    _week = await setWeek();
+    _weight = await setWeight();
+    _growing = await setGrowing();
+
     setState(() {
-      week = weeks[int.parse(lastWeek) - 1];
+      week = _week;
+      weight = _weight;
+      growing = _growing;
     });
-  }
-
-  Future<void> setWeight() async {
-    final pref = await SharedPreferences.getInstance();
-    setState(() {
-      double w = pref.getDouble('weight');
-      weight = w.toString();
-    });
-  }
-
-  Future<void> setGrowing() async {
-    final pref = await SharedPreferences.getInstance();
-    setState(() {
-      double lastWeight = pref.getDouble('lastWeight');
-      double firstWeight = pref.getDouble('weight');
-      double diff = (firstWeight - lastWeight).abs();
-      growing = diff.toStringAsFixed(2).toString();
-    });
-  }
-
-  Future<void> getWeeks() async {
-    SharedPreferences sp = await SharedPreferences.getInstance();
-    int i = 0;
-    while (i < 41) {
-      List<String> list = sp.getStringList((i + 1).toString());
-      if (list != null) {
-        WeekInformationBar wib = new WeekInformationBar(
-          weekNumber: weeks[i],
-          weight: double.parse(list[1]).toStringAsFixed(1),
-        );
-        data.add(wib);
-      }
-      i++;
-    }
-
-    for (int i = 0; i < data.length; i++) {
-      if (i == 0) {
-        WeekInformationBar wib = new WeekInformationBar(
-          weekNumber: weeks[0],
-          weight: data[0].weight.toString() + 'کیلوگرم',
-          difference: '0.00',
-        );
-        data1.add(wib);
-      } else {
-        double diff =
-            double.parse(data[i].weight) - double.parse(data[i - 1].weight);
-        WeekInformationBar wib = new WeekInformationBar(
-          weekNumber: data[i].weekNumber,
-          weight: data[i].weight + 'کیلوگرم',
-          difference: diff.toStringAsFixed(2).toString(),
-        );
-        data1.add(wib);
-      }
-    }
-  }
-
-  Row appBar() {
-    return Row(
-      textDirection: TextDirection.rtl,
-      children: <Widget>[
-        Container(
-            margin: EdgeInsets.only(right: 8.0, left: 8.0),
-            child: new IconButton(
-              highlightColor: Color.fromARGB(255, 45, 34, 22),
-              onPressed: () {
-                scaffoldKey3.currentState.openEndDrawer();
-              },
-              icon: new Icon(
-                FontAwesomeIcons.alignRight,
-                color: Colors.white,
-              ),
-            )),
-        Expanded(
-          child: Text(
-            "راهنمای آموزشی و \n\nمراقبتی مادران باردار",
-            textDirection: TextDirection.rtl,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                fontFamily: "Terafik",
-                color: Colors.white),
-          ),
-        ),
-        Container(
-            margin: EdgeInsets.only(right: 8.0, left: 16.0),
-            child: Container(
-              child: Image.asset(
-                "assets/logo.png",
-                fit: BoxFit.fill,
-              ),
-              width: 30,
-              height: 30,
-            )),
-      ],
-    );
   }
 }

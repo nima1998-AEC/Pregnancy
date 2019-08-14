@@ -1,13 +1,13 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
+import 'package:pregnancy_app/Source/WeekInformationBar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'WeekInformationBar.dart';
 
 String weight = '';
 String growing = '';
-List<String> min;
-List<String> max;
-List<int> weekIndex;
+List<String> min = ['0.0', ' 1.5', '7.5', '14.0'];
+List<String> max = ['0.0', '2.5', '12.0', '23.0'];
+List<int> weekIndex = [];
 List<String> table = new List<String>();
 List<WeekInformationBar> data;
 List<WeekInformationBar> data1;
@@ -57,13 +57,13 @@ List<String> weeks = [
 
 Future<void> getData() async {
   SharedPreferences sp = await SharedPreferences.getInstance();
-  int number = sp.getInt('number');
-  double bmi = sp.getDouble('bmi');
+  // int number = sp.getInt('number');
+  // double bmi = sp.getDouble('bmi');
   double weight = sp.getDouble('weight');
   data = new List<WeekInformationBar>();
   data1 = new List<WeekInformationBar>();
-  min = new List<String>();
-  max = new List<String>();
+  // min = new List<String>();
+  // max = new List<String>();
   weekIndex = new List<int>();
   int i = 0;
   while (i < 41) {
@@ -79,37 +79,37 @@ Future<void> getData() async {
     i++;
   }
 
-  for (int i = 0; i < 41; i++) {
-    if (i == 0 || i == 12 || i == 25 || i == 40) {
-      List<String> row = sp.getStringList("week" + (i + 1).toString());
-      if (number == 1) {
-        if (bmi < 20) {
-          min.add(row[0]);
-          max.add(row[1]);
-        } else if (bmi >= 20 && bmi < 25) {
-          min.add(row[2]);
-          max.add(row[3]);
-        } else if (bmi >= 25 && bmi < 27) {
-          min.add(row[4]);
-          max.add(row[5]);
-        } else if (bmi >= 27) {
-          min.add(row[6]);
-          max.add(row[7]);
-        }
-      } else if (number == 2) {
-        if (bmi >= 20 && bmi < 25) {
-          min.add(row[8]);
-          max.add(row[9]);
-        } else if (bmi >= 25 && bmi < 27) {
-          min.add(row[10]);
-          max.add(row[11]);
-        } else if (bmi >= 27) {
-          min.add(row[12]);
-          max.add(row[13]);
-        }
-      }
-    }
-  }
+  // for (int i = 0; i < 41; i++) {
+  //   if (i == 0 || i == 12 || i == 25 || i == 40) {
+  //     List<String> row = sp.getStringList("week" + (i + 1).toString());
+  //     if (number == 1) {
+  //       if (bmi < 20) {
+  //         min.add(row[0]);
+  //         max.add(row[1]);
+  //       } else if (bmi >= 20 && bmi < 25) {
+  //         min.add(row[2]);
+  //         max.add(row[3]);
+  //       } else if (bmi >= 25 && bmi < 27) {
+  //         min.add(row[4]);
+  //         max.add(row[5]);
+  //       } else if (bmi >= 27) {
+  //         min.add(row[6]);
+  //         max.add(row[7]);
+  //       }
+  //     } else if (number == 2) {
+  //       if (bmi >= 20 && bmi < 25) {
+  //         min.add(row[8]);
+  //         max.add(row[9]);
+  //       } else if (bmi >= 25 && bmi < 27) {
+  //         min.add(row[10]);
+  //         max.add(row[11]);
+  //       } else if (bmi >= 27) {
+  //         min.add(row[12]);
+  //         max.add(row[13]);
+  //       }
+  //     }
+  //   }
+  // }
 
   for (int i = 0; i < data.length; i++) {
     if (i == 0) {
@@ -130,6 +130,7 @@ Future<void> getData() async {
       data1.add(wib);
     }
   }
+  // print('Week Index : $weekIndex');
 }
 
 class Chart extends StatefulWidget {

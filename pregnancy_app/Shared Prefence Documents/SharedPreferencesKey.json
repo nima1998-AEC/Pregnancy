@@ -1,0 +1,17 @@
+{
+    "name": " Mother Name - STRING",
+    "age": "Mother age - INT",
+    "height": "Early pregnancy height - DOUBLE",
+    "weight": "Early pregnancy weight , DOUBLE",
+    "date": "Pregnancy Start Date - STRING",
+    "number": " Number of Fetuses - INT",
+    "bmi": " Mother BMI DOUBLE", 
+    "bmiStatus": "Mother BMI Status - STRING",
+    "lastWeight": "Last Saved weight - DOUBLE",
+    "lastWeek": "Last Saved Week - STRING",
+    "lastChange": "Last Saved Weight Change - DOUBLE",
+    "tableSize" : "Normal Weekly Weight Table Size - INT",
+    "week1 or week2 ... week41": "Normal Growing weight - STRING",
+    "1 or 2 ... 41" : "Mother Weekly Weight[week Number is KEY, week Weight, Date] - STRINGLIST"
+
+}

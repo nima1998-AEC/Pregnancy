@@ -4,6 +4,7 @@ class MotherProperties {
   final double height, weight;
   final String date;
   final double bmi;
+  final String status;
 
   MotherProperties({
     this.name,
@@ -13,5 +14,6 @@ class MotherProperties {
     this.weight,
     this.date,
     this.bmi,
+    this.status,
   });
 }

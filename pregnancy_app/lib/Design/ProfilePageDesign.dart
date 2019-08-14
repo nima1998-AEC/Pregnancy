@@ -2,23 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:persian_datepicker/persian_datepicker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'AddWeight.dart';
-import 'HistoryPage.dart';
+import 'package:pregnancy_app/Design/AddWeightPageDesign.dart';
+
+import 'package:pregnancy_app/Design/HistoryPageDesign.dart';
 import 'package:pregnancy_app/Model/MotherPropoerties.dart';
-import 'LoadPage.dart';
-
-MotherProperties motherProperties;
-MotherProperties mom;
-
-bool notNull = false;
-
-final nameController = TextEditingController();
-final ageController = TextEditingController();
-final heightController = TextEditingController();
-final weightController = TextEditingController();
-final dateController = TextEditingController();
-final numberController = TextEditingController();
+import 'package:pregnancy_app/Source/LoadingFunctions.dart';
+import 'package:pregnancy_app/Source/Other.dart';
+import 'package:pregnancy_app/Source/ProfilePageSource.dart';
+import 'package:pregnancy_app/Source/savingFunctions.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -26,116 +17,20 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePage extends State<ProfilePage> {
+  MotherProperties motherProperties;
+
   PersianDatePickerWidget persianDatePicker;
-  double bmi;
+
+  final nameController = TextEditingController();
+  final ageController = TextEditingController();
+  final heightController = TextEditingController();
+  final weightController = TextEditingController();
+  final dateController = TextEditingController();
+  final numberController = TextEditingController();
+
+  String bmi = '';
   String status = '';
-
-  Future<void> _saveProfileData(String name, int age, double height,
-      double weight, String date, int number) async {
-    final pref = await SharedPreferences.getInstance();
-    double bmi = weight / (height * height);
-    pref.setString('name', name);
-    pref.setInt('age', age);
-    pref.setDouble('height', height);
-    pref.setDouble('weight', weight);
-    pref.setString('date', date);
-    pref.setInt('number', number);
-    pref.setDouble('bmi', bmi);
-    pref.setDouble('1', weight);
-    pref.setDouble('lastWeight', weight);
-    pref.setString('lastWeek', '1');
-    List<String> list = ['1', weight.toString(), date];
-    pref.setStringList('1', list);
-    pref.setDouble('lastChange', 0.0);
-  }
-
-  void _loadBmiStatus() async {
-    loadProfileData().then((mom) {
-      if (mom.height != null && mom.weight != null) {
-        setState(() {
-          bmi = mom.bmi;
-          if (bmi < 20)
-            status = 'کسر وزن';
-          else if (bmi >= 20 && bmi < 25)
-            status = 'وزن نرمال';
-          else if (bmi >= 25 && bmi < 27)
-            status = 'اضافه وزن';
-          else if (bmi >= 27) status = 'چاق';
-        });
-      }
-    });
-  }
-
-  void _calculateBmiStatus() {
-    double weight, height;
-    bool weightFlag = false, heightFlag = false;
-    if (weightController.text.isEmpty) {
-      Fluttertoast.showToast(
-        msg: 'وزن خود را وارد نمایید',
-        backgroundColor: Color.fromARGB(255, 218, 86, 152).withOpacity(0.8),
-      );
-    } else {
-      weight = double.parse((weightController.text));
-      weightFlag = true;
-    }
-    if (heightController.text.isEmpty) {
-      Fluttertoast.showToast(
-        msg: 'قد خود را وارد نمایید',
-        backgroundColor: Color.fromARGB(255, 218, 86, 152).withOpacity(0.8),
-      );
-    } else {
-      height = (double.parse(heightController.text));
-      heightFlag = true;
-    }
-    setState(() {
-      if (weightFlag && heightFlag) {
-        bmi = weight / (height * height);
-        if (bmi < 20)
-          status = 'کسر وزن';
-        else if (bmi >= 20 && bmi < 25)
-          status = 'وزن نرمال';
-        else if (bmi >= 25 && bmi < 27)
-          status = 'اضافه وزن';
-        else if (bmi >= 27) status = 'چاق';
-      }
-    });
-  }
-
-  void _validation(BuildContext context) async {
-    if (nameController.text.isEmpty ||
-        ageController.text.isEmpty ||
-        heightController.text.isEmpty ||
-        weightController.text.isEmpty ||
-        dateController.text.isEmpty ||
-        numberController.text.isEmpty) {
-      Fluttertoast.showToast(
-        msg: 'اطلاعات را بصورت کامل وارد نمایید',
-        backgroundColor: Color.fromARGB(255, 218, 86, 152).withOpacity(0.8),
-      );
-    } else {
-      Navigator.pushReplacementNamed(context, '/MainPage');
-      _saveProfileData(
-        nameController.text,
-        int.parse(ageController.text),
-        double.parse(heightController.text),
-        double.parse(weightController.text),
-        dateController.text,
-        int.parse(numberController.text),
-      );
-    }
-  }
-
-  void _setMotherData() async {
-    mom = await loadProfileData();
-    setState(() {
-      if (mom.name != null &&
-          mom.height != null &&
-          mom.weight != null &&
-          mom.number != null &&
-          mom.date != null &&
-          mom.age != null) notNull = true;
-    });
-  }
+  bool notNull = false;
 
   persianDatePickerWidget() {
     persianDatePicker = PersianDatePicker(
@@ -159,13 +54,36 @@ class _ProfilePage extends State<ProfilePage> {
   void initState() {
     super.initState();
     persianDatePickerWidget();
-    _setMotherData();
-    _loadBmiStatus();
+
+    loadProfileData().then((onValue) {
+      debugPrint('On Value : ${onValue.name}');
+      debugPrint('On Value : ${onValue.age}');
+      debugPrint('On Value : ${onValue.bmi}');
+      debugPrint('On Value : ${onValue.date}');
+      debugPrint('On Value : ${onValue.height}');
+      debugPrint('On Value : ${onValue.weight}');
+      debugPrint('On Value : ${onValue.status}');
+
+      if (onValue.name != null &&
+          onValue.age != null &&
+          onValue.bmi != null &&
+          onValue.date != null &&
+          onValue.height != null &&
+          onValue.weight != null &&
+          onValue.status != null) {
+        setState(() {
+          motherProperties = onValue;
+          bmi = motherProperties.bmi.toStringAsFixed(2).toString();
+          status = motherProperties.status;
+          notNull = true;
+        });
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget got = Container(
+    Widget form = Container(
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage("assets/background.png"),
@@ -174,14 +92,16 @@ class _ProfilePage extends State<ProfilePage> {
       ),
       child: Column(
         children: <Widget>[
+          SizedBox(height: 25),
+          appBarWithoutDrawer(),
           SizedBox(
-            height: 30.0,
+            height: 20.0,
           ),
           Expanded(
             child: ListView(
               children: <Widget>[
                 Container(
-                  margin: EdgeInsets.only(left: 32, right: 32, top: 20),
+                  margin: EdgeInsets.only(left: 16, right: 16, top: 20),
                   decoration: BoxDecoration(
                       color: Color.fromARGB(255, 255, 255, 255),
                       borderRadius: BorderRadius.circular(10)),
@@ -215,7 +135,9 @@ class _ProfilePage extends State<ProfilePage> {
                                   decoration: InputDecoration(
                                       helperText:
                                           notNull ? "نام و نام خانوادگی" : null,
-                                      hintText: notNull ? mom.name : null,
+                                      hintText: notNull
+                                          ? motherProperties.name
+                                          : null,
                                       labelText: notNull
                                           ? null
                                           : "نام و نام خانوادگی"),
@@ -233,8 +155,9 @@ class _ProfilePage extends State<ProfilePage> {
                                   decoration: InputDecoration(
                                       helperText:
                                           notNull ? "سن(بر حسب سال)" : null,
-                                      hintText:
-                                          notNull ? mom.age.toString() : null,
+                                      hintText: notNull
+                                          ? motherProperties.age.toString()
+                                          : null,
                                       labelText:
                                           notNull ? null : "سن(بر حسب سال)"),
                                 ),
@@ -253,7 +176,7 @@ class _ProfilePage extends State<ProfilePage> {
                                           ? "قد قبل از بارداری(برحسب متر)"
                                           : null,
                                       hintText: notNull
-                                          ? mom.height
+                                          ? motherProperties.height
                                               .toStringAsFixed(2)
                                               .toString()
                                           : null,
@@ -276,7 +199,7 @@ class _ProfilePage extends State<ProfilePage> {
                                           ? "وزن قبل از بارداری(برحسب کیلوگرم)"
                                           : null,
                                       hintText: notNull
-                                          ? mom.weight.toString()
+                                          ? motherProperties.weight.toString()
                                           : null,
                                       labelText: notNull
                                           ? null
@@ -292,8 +215,9 @@ class _ProfilePage extends State<ProfilePage> {
                                   decoration: InputDecoration(
                                       helperText:
                                           notNull ? "وزن قبل از بارداری" : null,
-                                      hintText:
-                                          notNull ? mom.date.toString() : null,
+                                      hintText: notNull
+                                          ? motherProperties.date.toString()
+                                          : null,
                                       labelText: notNull
                                           ? null
                                           : "تاریخ شروع بارداری"),
@@ -325,7 +249,7 @@ class _ProfilePage extends State<ProfilePage> {
                                       helperText:
                                           notNull ? "تعداد جنین(قل)" : null,
                                       hintText: notNull
-                                          ? mom.number.toString()
+                                          ? motherProperties.number.toString()
                                           : null,
                                       labelText:
                                           notNull ? null : "تعداد جنین(قل)"),
@@ -363,8 +287,40 @@ class _ProfilePage extends State<ProfilePage> {
                                   ],
                                 ),
                                 onPressed: () {
-                                  _calculateBmiStatus();
-//                                  Navigator.pop(context);
+                                  bool _heightValid, _weightValid;
+                                  setState(() {
+                                    _heightValid =
+                                        heightValidation(heightController.text);
+                                    _weightValid =
+                                        weightValidation(weightController.text);
+
+                                    if (!_heightValid) {
+                                      Fluttertoast.showToast(
+                                        msg: 'قد خود را وارد نمایید',
+                                        backgroundColor:
+                                            Color.fromARGB(255, 218, 86, 152)
+                                                .withOpacity(0.8),
+                                        toastLength: Toast.LENGTH_LONG,
+                                      );
+                                    }
+                                    if (!_weightValid) {
+                                      Fluttertoast.showToast(
+                                        msg: 'وزن خود را وارد نمایید',
+                                        backgroundColor:
+                                            Color.fromARGB(255, 218, 86, 152)
+                                                .withOpacity(0.8),
+                                        toastLength: Toast.LENGTH_SHORT,
+                                      );
+                                    } else if (_heightValid && _weightValid) {
+                                      bmi = calculationBmi(
+                                          heightController.text,
+                                          weightController.text)[0];
+
+                                      status = calculationBmi(
+                                          heightController.text,
+                                          weightController.text)[1];
+                                    }
+                                  });
                                 },
                               ),
                               margin: EdgeInsets.all(16.0),
@@ -423,7 +379,7 @@ class _ProfilePage extends State<ProfilePage> {
                                       ),
                                       child: bmi != null
                                           ? Text(
-                                              bmi.toStringAsFixed(2).toString(),
+                                              bmi,
                                               textDirection: TextDirection.rtl,
                                               style: TextStyle(
                                                   fontFamily: "Sans",
@@ -506,6 +462,7 @@ class _ProfilePage extends State<ProfilePage> {
                   ),
                 ),
                 Container(
+                  margin: EdgeInsets.only(left: 16, right: 16, top: 12),
                   child: Row(
                     textDirection: TextDirection.rtl,
                     children: <Widget>[
@@ -534,7 +491,33 @@ class _ProfilePage extends State<ProfilePage> {
                             ],
                           ),
                           onPressed: () {
-                            _validation(context);
+                            bool _valid = validation(
+                                nameController.text,
+                                ageController.text,
+                                heightController.text,
+                                weightController.text,
+                                dateController.text,
+                                numberController.text);
+
+                            if (_valid) {
+                              Navigator.pushReplacementNamed(
+                                  context, '/MainPageDesign');
+                              saveProfileData(
+                                nameController.text,
+                                int.parse(ageController.text),
+                                double.parse(heightController.text),
+                                double.parse(weightController.text),
+                                dateController.text,
+                                int.parse(numberController.text),
+                              );
+                            } else {
+                              Fluttertoast.showToast(
+                                msg: 'اطلاعات را بصورت کامل وارد نمایید',
+                                backgroundColor:
+                                    Color.fromARGB(255, 218, 86, 152)
+                                        .withOpacity(0.8),
+                              );
+                            }
                           },
                         ),
                       ),
@@ -571,8 +554,7 @@ class _ProfilePage extends State<ProfilePage> {
                       ),
                     ],
                   ),
-                  margin: EdgeInsets.only(left: 32, right: 32, top: 12),
-                )
+                ),
               ],
             ),
           ),
@@ -580,7 +562,8 @@ class _ProfilePage extends State<ProfilePage> {
       ),
     );
     return MaterialApp(
-      debugShowCheckedModeBanner: true,
+      debugShowCheckedModeBanner: debugBanner(),
+      // theme: _baseTheme,
       home: Scaffold(
         endDrawer: notNull
             ? Container(
@@ -599,7 +582,7 @@ class _ProfilePage extends State<ProfilePage> {
                       ),
                       Expanded(
                         child: ListView(
-                          padding: EdgeInsets.only(top: 0),
+                          padding: EdgeInsets.only(top: 0.0),
                           children: <Widget>[
                             Column(
                               children: <Widget>[
@@ -629,11 +612,12 @@ class _ProfilePage extends State<ProfilePage> {
                                         ),
                                         onTap: () {
                                           Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder:
-                                                      (BuildContext context) =>
-                                                          AddWeight()));
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  AddWeightPage(),
+                                            ),
+                                          );
                                         },
                                       ),
                                     ),
@@ -906,7 +890,7 @@ class _ProfilePage extends State<ProfilePage> {
                 ),
               )
             : null,
-        body: got,
+        body: form,
       ),
     );
   }

@@ -3,396 +3,34 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:persian_datepicker/persian_datepicker.dart';
-import 'package:pregnancy_app/LoadPage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'Chart.dart';
-import 'Model/MotherPropoerties.dart';
-import 'Drawer/AddWeightDrawer.dart';
 
-class AddWeight extends StatefulWidget {
-  _AddWeight createState() => _AddWeight();
+import 'package:pregnancy_app/Drawer/AddWeightPageDrawer.dart';
+import 'package:pregnancy_app/Source/AddWeightPageSource.dart';
+import 'package:pregnancy_app/Source/Other.dart';
+
+class AddWeightPage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _AddWeightPage();
 }
 
-class _AddWeight extends State<AddWeight> {
+class _AddWeightPage extends State<AddWeightPage> {
   var scaffoldKey2 = GlobalKey<ScaffoldState>();
 
   PersianDatePickerWidget persianDatePicker;
   final dateController = TextEditingController();
   final weightController = TextEditingController();
+
   String weekController = '';
   String field1 = '';
   String field2 = '';
   String field3 = '';
-  double firstWeight = 0.0;
-  double lastWeight = 0.0;
-  String weekKey;
 
   @override
   void initState() {
     super.initState();
     persianDatePickerWidget();
-    loadLastWeight(context);
-  }
-
-  persianDatePickerWidget() {
-    persianDatePicker = PersianDatePicker(
-      headerTodayBackgroundColor: Colors.pink[100],
-      currentDayBackgroundColor: Colors.pink[100],
-      headerTodayIcon: Icon(
-        Icons.calendar_today,
-        color: Colors.black,
-        size: 18,
-      ),
-      showGregorianDays: true,
-      monthSelectionAnimationCurve: Curves.fastOutSlowIn,
-      farsiDigits: false,
-      gregorianDaysLocation: GregorianDaysLocation.topLeft,
-      weekCaptionsBackgroundColor: Color.fromARGB(255, 218, 86, 152),
-      selectedDayBackgroundColor: Color.fromARGB(255, 218, 86, 152),
-      controller: dateController,
-    ).init();
-  }
-
-  Future<void> saveWeeklyWeight(BuildContext context) async {
-    final pref = await SharedPreferences.getInstance();
-    if (weekController == 'هفته اول')
-      weekKey = '1';
-    else if (weekController == 'هفته دوم')
-      weekKey = '2';
-    else if (weekController == 'هفته سوم')
-      weekKey = '3';
-    else if (weekController == 'هفته چهارم')
-      weekKey = '4';
-    else if (weekController == 'هفته پنجم')
-      weekKey = '5';
-    else if (weekController == 'هفته ششم')
-      weekKey = '6';
-    else if (weekController == 'هفته هفتم')
-      weekKey = '7';
-    else if (weekController == 'هفته هشتم')
-      weekKey = '8';
-    else if (weekController == 'هفته نهم')
-      weekKey = '9';
-    else if (weekController == 'هفته دهم')
-      weekKey = '10';
-    else if (weekController == 'هفته یازدهم')
-      weekKey = '11';
-    else if (weekController == 'هفته دوازدهم')
-      weekKey = '12';
-    else if (weekController == 'هفته سیزدهم')
-      weekKey = '13';
-    else if (weekController == 'هفته چهاردهم')
-      weekKey = '14';
-    else if (weekController == 'هفته پانزدهم')
-      weekKey = '15';
-    else if (weekController == 'هفته شانزدهم')
-      weekKey = '16';
-    else if (weekController == 'هفته هفدهم')
-      weekKey = '17';
-    else if (weekController == 'هفته هجدهم')
-      weekKey = '18';
-    else if (weekController == 'هفته نوزدهم')
-      weekKey = '19';
-    else if (weekController == 'هفته بیستم')
-      weekKey = '20';
-    else if (weekController == 'هفته بیست و یکم')
-      weekKey = '21';
-    else if (weekController == 'هفته بیست و دوم')
-      weekKey = '22';
-    else if (weekController == 'هفته بیست و سوم')
-      weekKey = '23';
-    else if (weekController == 'هفته بیست و چهارم')
-      weekKey = '24';
-    else if (weekController == 'هفته بیست پنجم')
-      weekKey = '25';
-    else if (weekController == 'هفته بیست و ششم')
-      weekKey = '26';
-    else if (weekController == 'هفته بیست و هفتم')
-      weekKey = '27';
-    else if (weekController == 'هفته بیست و هشتم')
-      weekKey = '28';
-    else if (weekController == 'هفته بیست و نهم')
-      weekKey = '29';
-    else if (weekController == 'هفته سی ام')
-      weekKey = '30';
-    else if (weekController == 'هفته سی و یکم')
-      weekKey = '31';
-    else if (weekController == 'هفته سی و دوم')
-      weekKey = '32';
-    else if (weekController == 'هفته سی و سوم')
-      weekKey = '33';
-    else if (weekController == 'هفته سی و چهارم')
-      weekKey = '34';
-    else if (weekController == 'هفته سی و پنجم')
-      weekKey = '35';
-    else if (weekController == 'هفته سی و ششم')
-      weekKey = '36';
-    else if (weekController == 'هفته سی و هفتم')
-      weekKey = '37';
-    else if (weekController == 'هفته سی و هشتتم')
-      weekKey = '38';
-    else if (weekController == 'هفته سی و نهم')
-      weekKey = '39';
-    else if (weekController == 'هفته چهلم')
-      weekKey = '40';
-    else if (weekController == 'هفته چهل و یکم') weekKey = '41';
-
-    List<String> weeklyWeight = [
-      weekKey,
-      weightController.text,
-      dateController.text,
-    ];
-    String s = pref.getString('lastWeek');
-    List<String> c = pref.getStringList(s);
-    double l = double.parse(c[1]);
-    pref.setDouble(
-        'lastChange', (l - double.parse(weightController.text)).abs());
-    pref.setStringList(weekKey, weeklyWeight);
-    pref.setDouble('lastWeight', double.parse(weightController.text));
-    pref.setString('lastWeek', weekKey);
-  }
-
-  Future<void> calucate(BuildContext context) async {
-    if (weekController == 'هفته اول')
-      weekKey = '1';
-    else if (weekController == 'هفته دوم')
-      weekKey = '2';
-    else if (weekController == 'هفته سوم')
-      weekKey = '3';
-    else if (weekController == 'هفته چهارم')
-      weekKey = '4';
-    else if (weekController == 'هفته پنجم')
-      weekKey = '5';
-    else if (weekController == 'هفته ششم')
-      weekKey = '6';
-    else if (weekController == 'هفته هفتم')
-      weekKey = '7';
-    else if (weekController == 'هفته هشتم')
-      weekKey = '8';
-    else if (weekController == 'هفته نهم')
-      weekKey = '9';
-    else if (weekController == 'هفته دهم')
-      weekKey = '10';
-    else if (weekController == 'هفته یازدهم')
-      weekKey = '11';
-    else if (weekController == 'هفته دوازدهم')
-      weekKey = '12';
-    else if (weekController == 'هفته سیزدهم')
-      weekKey = '13';
-    else if (weekController == 'هفته چهاردهم')
-      weekKey = '14';
-    else if (weekController == 'هفته پانزدهم')
-      weekKey = '15';
-    else if (weekController == 'هفته شانزدهم')
-      weekKey = '16';
-    else if (weekController == 'هفته هفدهم')
-      weekKey = '17';
-    else if (weekController == 'هفته هجدهم')
-      weekKey = '18';
-    else if (weekController == 'هفته نوزدهم')
-      weekKey = '19';
-    else if (weekController == 'هفته بیستم')
-      weekKey = '20';
-    else if (weekController == 'هفته بیست و یکم')
-      weekKey = '21';
-    else if (weekController == 'هفته بیست و دوم')
-      weekKey = '22';
-    else if (weekController == 'هفته بیست و سوم')
-      weekKey = '23';
-    else if (weekController == 'هفته بیست و چهارم')
-      weekKey = '24';
-    else if (weekController == 'هفته بیست پنجم')
-      weekKey = '25';
-    else if (weekController == 'هفته بیست و ششم')
-      weekKey = '26';
-    else if (weekController == 'هفته بیست و هفتم')
-      weekKey = '27';
-    else if (weekController == 'هفته بیست و هشتم')
-      weekKey = '28';
-    else if (weekController == 'هفته بیست و نهم')
-      weekKey = '29';
-    else if (weekController == 'هفته سی ام')
-      weekKey = '30';
-    else if (weekController == 'هفته سی و یکم')
-      weekKey = '31';
-    else if (weekController == 'هفته سی و دوم')
-      weekKey = '32';
-    else if (weekController == 'هفته سی و سوم')
-      weekKey = '33';
-    else if (weekController == 'هفته سی و چهارم')
-      weekKey = '34';
-    else if (weekController == 'هفته سی و پنجم')
-      weekKey = '35';
-    else if (weekController == 'هفته سی و ششم')
-      weekKey = '36';
-    else if (weekController == 'هفته سی و هفتم')
-      weekKey = '37';
-    else if (weekController == 'هفته سی و هشتتم')
-      weekKey = '38';
-    else if (weekController == 'هفته سی و نهم')
-      weekKey = '39';
-    else if (weekController == 'هفته چهلم')
-      weekKey = '40';
-    else if (weekController == 'هفته چهل و یکم') weekKey = '41';
-
-    final sp = await SharedPreferences.getInstance();
-    String numberWeek;
-    int childNumber;
-    List<String> normalWeeklyWeight;
-
-    MotherProperties motherProperties = await loadProfileData();
-
-    firstWeight = sp.getDouble('weight');
-    lastWeight = sp.getDouble('lastWeight');
-    numberWeek = numberWeek = 'week' + weekKey;
-    childNumber = motherProperties.number;
-    normalWeeklyWeight = sp.getStringList(numberWeek);
-    setState(() {
-      field1 = (firstWeight - double.parse(weightController.text))
-          .abs()
-          .toStringAsFixed(2)
-          .toString();
-      field2 = (lastWeight - double.parse(weightController.text))
-          .abs()
-          .toStringAsFixed(2)
-          .toString();
-
-      if (childNumber == 1) {
-        if (double.parse(field2) >= double.parse(normalWeeklyWeight[0]) &&
-            double.parse(field2) <= double.parse(normalWeeklyWeight[1]))
-          field3 = 'کم وزن';
-        else if (double.parse(field2) >= double.parse(normalWeeklyWeight[2]) &&
-            double.parse(field2) <= double.parse(normalWeeklyWeight[3]))
-          field3 = 'طبیعی';
-        else if (double.parse(field2) >= double.parse(normalWeeklyWeight[4]) &&
-            double.parse(field2) <= double.parse(normalWeeklyWeight[5]))
-          field3 = 'اضافه وزن';
-        else
-          field3 = 'چاق';
-      } else if (childNumber == 2) {
-        if (double.parse(field2) >= double.parse(normalWeeklyWeight[8]) &&
-            double.parse(field2) <= double.parse(normalWeeklyWeight[9]))
-          field3 = 'طبیعی';
-        else if (double.parse(field2) >= double.parse(normalWeeklyWeight[10]) &&
-            double.parse(field2) <= double.parse(normalWeeklyWeight[11]))
-          field3 = 'اضافه وزن';
-        else
-          field3 = 'چاق';
-      }
-    });
-  }
-
-  Future<void> loadLastWeight(BuildContext context) async {
-    final pref = await SharedPreferences.getInstance();
-    double lastChange = pref.getDouble('lastChange');
-    setState(() {
-      lastWeight = pref.getDouble('lastWeight');
-      firstWeight = pref.getDouble('weight');
-      field1 = (firstWeight - lastWeight).abs().toStringAsFixed(2).toString();
-      field2 = lastChange.toStringAsFixed(2).toString();
-    });
-    status();
-    weightController.text = '';
-  }
-
-  Future<void> status() async {
-    final sp = await SharedPreferences.getInstance();
-    String numberWeek;
-    int childNumber;
-    List<String> normalWeeklyWeight;
-
-    MotherProperties motherProperties = await loadProfileData();
-    numberWeek = sp.getString('lastWeek');
-    numberWeek = 'week' + numberWeek;
-    childNumber = motherProperties.number;
-    normalWeeklyWeight = sp.getStringList(numberWeek);
-
-    setState(() {
-      if (childNumber == 1) {
-        if (double.parse(field2) >= double.parse(normalWeeklyWeight[0]) &&
-            double.parse(field2) <= double.parse(normalWeeklyWeight[1]))
-          field3 = 'کم وزن';
-        else if (double.parse(field2) >= double.parse(normalWeeklyWeight[2]) &&
-            double.parse(field2) <= double.parse(normalWeeklyWeight[3]))
-          field3 = 'طبیعی';
-        else if (double.parse(field2) >= double.parse(normalWeeklyWeight[4]) &&
-            double.parse(field2) <= double.parse(normalWeeklyWeight[5]))
-          field3 = 'اضافه وزن';
-        else
-          field3 = 'چاق';
-      } else if (childNumber == 2) {
-        if (double.parse(field2) >= double.parse(normalWeeklyWeight[8]) &&
-            double.parse(field2) <= double.parse(normalWeeklyWeight[9]))
-          field3 = 'طبیعی';
-        else if (double.parse(field2) >= double.parse(normalWeeklyWeight[10]) &&
-            double.parse(field2) <= double.parse(normalWeeklyWeight[11]))
-          field3 = 'اضافه وزن';
-        else
-          field3 = 'چاق';
-      }
-    });
-  }
-
-  void validation(BuildContext context) {
-    if (weekController.isEmpty ||
-        weightController.text.isEmpty ||
-        dateController.text.isEmpty) {
-      Fluttertoast.showToast(
-        msg: 'اطلاعات را بصورت کامل وارد نمایید',
-        backgroundColor: Color.fromARGB(255, 218, 86, 152).withOpacity(0.8),
-      );
-    } else {
-      saveWeeklyWeight(context);
-      loadLastWeight(context);
-      getData();
-      Navigator.pushReplacementNamed(context, "/MainPage");
-
-//      Navigator.push(context, MaterialPageRoute(builder: (BuildContext c)=>MainPage(intent:'addweight')));
-//    Navigator.pop(context);
-
-    }
-  }
-
-  Row appBar() {
-    return Row(
-      textDirection: TextDirection.rtl,
-      children: <Widget>[
-        Container(
-            margin: EdgeInsets.only(right: 8.0, left: 8.0),
-            child: new IconButton(
-              highlightColor: Color.fromARGB(255, 45, 34, 22),
-              onPressed: () {
-                scaffoldKey2.currentState.openEndDrawer();
-              },
-              icon: new Icon(
-                FontAwesomeIcons.alignRight,
-                color: Colors.white,
-              ),
-            )),
-        Expanded(
-          child: Text(
-            "راهنمای آموزشی و \n\nمراقبتی مادران باردار",
-            textDirection: TextDirection.rtl,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                fontFamily: "Terafik",
-                color: Colors.white),
-          ),
-        ),
-        Container(
-            margin: EdgeInsets.only(right: 8.0, left: 16.0),
-            child: Container(
-              child: Image.asset(
-                "assets/logo.png",
-                fit: BoxFit.fill,
-              ),
-              width: 30,
-              height: 30,
-            )),
-      ],
-    );
+    callFunctions();
+    debugPrint('call Functions in AddWeigth ...');
   }
 
   @override
@@ -403,12 +41,12 @@ class _AddWeight extends State<AddWeight> {
           SizedBox(
             height: 20.0,
           ),
-          appBar(),
+          appBar(scaffoldKey2),
           Expanded(
             child: ListView(
               children: <Widget>[
                 Container(
-                  margin: EdgeInsets.only(left: 32, right: 32, top: 20),
+                  margin: EdgeInsets.only(left: 16, right: 16, top: 20),
                   decoration: BoxDecoration(
                       color: Color.fromARGB(255, 255, 255, 255),
                       borderRadius: BorderRadius.circular(10)),
@@ -444,49 +82,8 @@ class _AddWeight extends State<AddWeight> {
                                       weekController,
                                     ),
                               isExpanded: true,
-                              items: <String>[
-                                'هفته اول',
-                                'هفته دوم',
-                                'هفته سوم',
-                                'هفته چهارم',
-                                'هفته پنجم',
-                                'هفته ششم',
-                                'هفته هفتم',
-                                'هفته هشتم',
-                                'هفته نهم',
-                                'هفته دهم',
-                                'هفته یازدهم',
-                                'هفته دوازدهم',
-                                'هفته سیزدهم',
-                                'هفته چهاردهم',
-                                'هفته پانزدهم',
-                                'هفته شانزدهم',
-                                'هفته هفدهم',
-                                'هفته هجدهم',
-                                'هفته نوزدهم',
-                                'هفته بیستم',
-                                'هفته بیست و یکم',
-                                'هفته بیست و دوم',
-                                'هفته بیست و سوم',
-                                'هفته بیست و چهارم',
-                                'هفته بیست و پنجم',
-                                'هفته بیست و ششم',
-                                'هفته بیست و هفتم',
-                                'هفته بیست و هشتم',
-                                'هفته بیست و نهم',
-                                'هفته سی ام',
-                                'هفته سی و یکم',
-                                'هفته سی و دوم',
-                                'هفته سی و سوم',
-                                'هفته سی و چهارم',
-                                'هفته سی و پنجم',
-                                'هفته سی و ششم',
-                                'هفته سی و هفتم',
-                                'هفته سی و هشتم',
-                                'هفته سی و نهم',
-                                'هفته چهلم',
-                                'هفته چهل و یکم',
-                              ].map<DropdownMenuItem>((String value) {
+                              items: weeksList()
+                                  .map<DropdownMenuItem>((String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
                                   child: Text(value),
@@ -562,24 +159,18 @@ class _AddWeight extends State<AddWeight> {
                               ],
                             ),
                             onPressed: () {
-                              if (weekController.isEmpty ||
-                                  weightController.text.isEmpty ||
-                                  dateController.text.isEmpty) {
+                              bool _valid = calucateValidation(
+                                  weekController, weightController.text);
+                              if (_valid) {
+                                callCalucateFunction();
+                              } else {
                                 Fluttertoast.showToast(
                                   msg: 'اطلاعات را بصورت کامل وارد نمایید',
                                   backgroundColor:
                                       Color.fromARGB(255, 218, 86, 152)
                                           .withOpacity(0.8),
                                 );
-                              } else {
-                                calucate(context);
-                                // saveWeeklyWeight(context);
-                                // loadLastWeight(context);
-                                // getData();
-                                // Navigator.pushReplacementNamed(context, "/MainPage");
                               }
-                              //  calculateBmi();
-//                            Navigator.pop(context);
                             }),
                         margin: EdgeInsets.all(16.0),
                       ),
@@ -587,7 +178,7 @@ class _AddWeight extends State<AddWeight> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(right: 32, left: 32, top: 12),
+                  margin: EdgeInsets.only(right: 16, left: 16, top: 12),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
                       color: Colors.white.withOpacity(0.5),
@@ -646,7 +237,7 @@ class _AddWeight extends State<AddWeight> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(right: 32, left: 32, top: 8),
+                  margin: EdgeInsets.only(right: 16, left: 16, top: 8),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
                       color: Colors.white.withOpacity(0.5),
@@ -705,7 +296,7 @@ class _AddWeight extends State<AddWeight> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(right: 32, left: 32, top: 8),
+                  margin: EdgeInsets.only(right: 16, left: 16, top: 8),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
                       color: Colors.white.withOpacity(0.5),
@@ -764,6 +355,7 @@ class _AddWeight extends State<AddWeight> {
                   ),
                 ),
                 Container(
+                  margin: EdgeInsets.only(left: 16, right: 16, top: 12),
                   child: Row(
                     textDirection: TextDirection.rtl,
                     children: <Widget>[
@@ -793,7 +385,8 @@ class _AddWeight extends State<AddWeight> {
                             ],
                           ),
                           onPressed: () {
-                            validation(context);
+                            validation(context, weekController,
+                                weightController.text, dateController.text);
                           },
                         ),
                       ),
@@ -831,7 +424,6 @@ class _AddWeight extends State<AddWeight> {
                       ),
                     ],
                   ),
-                  margin: EdgeInsets.only(left: 32, right: 32, top: 12),
                 )
               ],
             ),
@@ -846,11 +438,55 @@ class _AddWeight extends State<AddWeight> {
       ),
     );
     return MaterialApp(
+      debugShowCheckedModeBanner: debugBanner(),
       home: Scaffold(
         key: scaffoldKey2,
         body: widget,
         endDrawer: AddWeightDrawer(),
       ),
     );
+  }
+
+  void persianDatePickerWidget() {
+    persianDatePicker = PersianDatePicker(
+      headerTodayBackgroundColor: Colors.pink[100],
+      currentDayBackgroundColor: Colors.pink[100],
+      headerTodayIcon: Icon(
+        Icons.calendar_today,
+        color: Colors.black,
+        size: 18,
+      ),
+      showGregorianDays: true,
+      monthSelectionAnimationCurve: Curves.fastOutSlowIn,
+      farsiDigits: false,
+      gregorianDaysLocation: GregorianDaysLocation.topLeft,
+      weekCaptionsBackgroundColor: Color.fromARGB(255, 218, 86, 152),
+      selectedDayBackgroundColor: Color.fromARGB(255, 218, 86, 152),
+      controller: dateController,
+    ).init();
+  }
+
+  Future<void> callFunctions() async {
+    String _setWeightChangeFromScratch,
+        _setweightChangeFromLastWeek,
+        _setStatus;
+    _setWeightChangeFromScratch = await setWeightChangeFromScratch();
+    _setweightChangeFromLastWeek = await setWeightChangeFromLastWeek();
+    _setStatus = await setStatus();
+    setState(() {
+      field1 = _setWeightChangeFromScratch;
+      field2 = _setweightChangeFromLastWeek;
+      field3 = _setStatus;
+    });
+  }
+
+  void callCalucateFunction() {
+    setState(() {
+      calucate(weightController.text, weekController).then((onValue) {
+        field1 = onValue[0];
+        field2 = onValue[1];
+        field3 = onValue[2];
+      });
+    });
   }
 }
