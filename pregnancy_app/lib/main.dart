@@ -48,7 +48,7 @@ class _MyApp extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
-        '/MainPageDesign': (BuildContext context) => new MainPage(),
+        '/MainPage': (BuildContext context) => new MainPage(),
         '/ProfilePage': (BuildContext context) => new ProfilePage(),
       },
       home: Scaffold(

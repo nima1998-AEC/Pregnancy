@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:pregnancy_app/Design/AddWeightPageDesign.dart';
+import 'package:pregnancy_app/Design/ProfilePageDesign.dart';
 
 import 'package:pregnancy_app/Drawer/MainPageDrawer.dart';
 import 'package:pregnancy_app/Source/MainPageSource.dart';
@@ -28,6 +29,10 @@ class _MainPage extends State<MainPage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: debugBanner(),
+       routes: <String, WidgetBuilder>{
+        '/MainPage': (BuildContext context) => new MainPage(),
+        '/ProfilePage': (BuildContext context) => new ProfilePage(),
+      },
       home: Scaffold(
         key: scaffoldKey1,
         endDrawer: MainPageDrawer(),

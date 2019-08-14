@@ -5,6 +5,7 @@ import 'package:persian_datepicker/persian_datepicker.dart';
 import 'package:pregnancy_app/Design/AddWeightPageDesign.dart';
 
 import 'package:pregnancy_app/Design/HistoryPageDesign.dart';
+import 'package:pregnancy_app/Design/MainPageDesign.dart';
 import 'package:pregnancy_app/Model/MotherPropoerties.dart';
 import 'package:pregnancy_app/Source/LoadingFunctions.dart';
 import 'package:pregnancy_app/Source/Other.dart';
@@ -500,8 +501,6 @@ class _ProfilePage extends State<ProfilePage> {
                                 numberController.text);
 
                             if (_valid) {
-                              Navigator.pushReplacementNamed(
-                                  context, '/MainPageDesign');
                               saveProfileData(
                                 nameController.text,
                                 int.parse(ageController.text),
@@ -510,6 +509,13 @@ class _ProfilePage extends State<ProfilePage> {
                                 dateController.text,
                                 int.parse(numberController.text),
                               );
+                              Navigator.pushReplacementNamed(
+                                  context, '/MainPage');
+                              // Navigator.of(context).push(
+                              //   MaterialPageRoute(
+                              //     builder: (context) => MainPage(),
+                              //   ),
+                              // );
                             } else {
                               Fluttertoast.showToast(
                                 msg: 'اطلاعات را بصورت کامل وارد نمایید',
@@ -563,7 +569,10 @@ class _ProfilePage extends State<ProfilePage> {
     );
     return MaterialApp(
       debugShowCheckedModeBanner: debugBanner(),
-      // theme: _baseTheme,
+      routes: <String, WidgetBuilder>{
+        '/MainPage': (BuildContext context) => new MainPage(),
+        '/ProfilePage': (BuildContext context) => new ProfilePage(),
+      },
       home: Scaffold(
         endDrawer: notNull
             ? Container(

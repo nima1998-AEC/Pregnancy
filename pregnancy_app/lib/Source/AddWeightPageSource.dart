@@ -119,7 +119,7 @@ void validation(BuildContext context, String weekValue, String weightValue,
     saveWeeklyWeight(weekValue, weightValue, dateValue);
     // loadLastWeight(context);
     // getData();
-    Navigator.pushReplacementNamed(context, "/MainPageDesign");
+    Navigator.pushReplacementNamed(context, "/MainPage");
   }
 }
 

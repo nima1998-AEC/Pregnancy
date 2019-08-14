@@ -387,6 +387,7 @@ class _AddWeightPage extends State<AddWeightPage> {
                           onPressed: () {
                             validation(context, weekController,
                                 weightController.text, dateController.text);
+                                
                           },
                         ),
                       ),

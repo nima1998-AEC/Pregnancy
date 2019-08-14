@@ -86,7 +86,7 @@ class _LoadPage extends State<LoadPage> {
           motherProperties.age != null &&
           motherProperties.name != null) {
         debugPrint("User information is saved, Navigation to Main Page ... ");
-        Navigator.of(context).pushReplacementNamed('/MainPageDesign');
+        Navigator.of(context).pushReplacementNamed('/MainPage');
       } else {
         debugPrint(
             "User information is`t saved, Navigation to Profile Page ... ");
