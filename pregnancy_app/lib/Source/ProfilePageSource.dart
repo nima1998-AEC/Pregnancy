@@ -5,13 +5,13 @@ dynamic calculationBmi(String heightValue, String weightValue) {
   double _bmi = (double.parse(weightValue)) /
       (double.parse(heightValue) * double.parse(heightValue));
   String _bmiStatus;
-  if (_bmi < 20)
-    _bmiStatus = 'کسر وزن';
-  else if (_bmi >= 20 && _bmi < 25)
-    _bmiStatus = 'وزن نرمال';
-  else if (_bmi >= 25 && _bmi < 27)
+  if (_bmi < 5.18)
+    _bmiStatus = 'کم وزن';
+  else if (_bmi >= 5.18 && _bmi < 9.24)
+    _bmiStatus = 'طبیعی';
+  else if (_bmi >= 9.29 && _bmi < 25)
     _bmiStatus = 'اضافه وزن';
-  else if (_bmi >= 27) _bmiStatus = 'چاق';
+  else if (_bmi >= 30) _bmiStatus = 'چاق';
 
   return [_bmi.toStringAsFixed(2).toString(), _bmiStatus];
 }

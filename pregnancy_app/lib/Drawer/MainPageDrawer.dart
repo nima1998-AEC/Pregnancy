@@ -3,9 +3,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pregnancy_app/Design/AddWeightPageDesign.dart';
 import 'package:pregnancy_app/Design/HistoryPageDesign.dart';
 import 'package:pregnancy_app/Design/ProfilePageDesign.dart';
+import 'package:pregnancy_app/Source/Table.dart';
 
 class MainPageDrawer extends StatefulWidget {
-  _MainPageDrawer createState() => _MainPageDrawer();
+  State<StatefulWidget> createState() => _MainPageDrawer();
 }
 
 class _MainPageDrawer extends State<MainPageDrawer> {
@@ -63,6 +64,7 @@ class _MainPageDrawer extends State<MainPageDrawer> {
                             )),
                         height: 45,
                       ),
+
                       Container(
                         child: new Directionality(
                           textDirection: TextDirection.rtl,
@@ -98,6 +100,32 @@ class _MainPageDrawer extends State<MainPageDrawer> {
                         ),
                         height: 45,
                       ),
+
+                      Container(
+                        child: new Directionality(
+                            textDirection: TextDirection.rtl,
+                            child: Theme(
+                              data: ThemeData(
+                                highlightColor:
+                                    Color.fromARGB(255, 221, 85, 153),
+                              ),
+                              child: ListTile(
+                                title: Text("نکات آموزشی ویژه",
+                                    textDirection: TextDirection.rtl,
+                                    style: TextStyle(
+                                        fontFamily: "Terafik",
+                                        color: Color.fromARGB(255, 84, 31, 49),
+                                        fontWeight: FontWeight.bold)),
+                                leading: Icon(
+                                  FontAwesomeIcons.chalkboardTeacher,
+                                  color: Color.fromARGB(255, 84, 31, 49),
+                                  textDirection: TextDirection.rtl,
+                                ),
+                              ),
+                            )),
+                        height: 45,
+                      ),
+
                       Container(
                         child: new Directionality(
                             textDirection: TextDirection.rtl,
@@ -114,7 +142,7 @@ class _MainPageDrawer extends State<MainPageDrawer> {
                                         color: Color.fromARGB(255, 84, 31, 49),
                                         fontWeight: FontWeight.bold)),
                                 leading: Icon(
-                                  FontAwesomeIcons.solidFolderOpen,
+                                  FontAwesomeIcons.chartArea,
                                   color: Color.fromARGB(255, 84, 31, 49),
                                   textDirection: TextDirection.rtl,
                                 ),
@@ -129,54 +157,7 @@ class _MainPageDrawer extends State<MainPageDrawer> {
                             )),
                         height: 45,
                       ),
-                      Container(
-                        child: new Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: Theme(
-                              data: ThemeData(
-                                highlightColor:
-                                    Color.fromARGB(255, 221, 85, 153),
-                              ),
-                              child: ListTile(
-                                title: Text("توصیه های آموزشی",
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(
-                                        fontFamily: "Terafik",
-                                        color: Color.fromARGB(255, 84, 31, 49),
-                                        fontWeight: FontWeight.bold)),
-                                leading: Icon(
-                                  FontAwesomeIcons.chalkboardTeacher,
-                                  color: Color.fromARGB(255, 84, 31, 49),
-                                  textDirection: TextDirection.rtl,
-                                ),
-                              ),
-                            )),
-                        height: 45,
-                      ),
-                      Container(
-                        child: new Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: Theme(
-                              data: ThemeData(
-                                highlightColor:
-                                    Color.fromARGB(255, 221, 85, 153),
-                              ),
-                              child: ListTile(
-                                title: Text("سوابق ثبت وزن",
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(
-                                        fontFamily: "Terafik",
-                                        color: Color.fromARGB(255, 84, 31, 49),
-                                        fontWeight: FontWeight.bold)),
-                                leading: Icon(
-                                  FontAwesomeIcons.chartArea,
-                                  color: Color.fromARGB(255, 84, 31, 49),
-                                  textDirection: TextDirection.rtl,
-                                ),
-                              ),
-                            )),
-                        height: 45,
-                      ),
+
                       Container(
                         child: new Directionality(
                             textDirection: TextDirection.rtl,
@@ -187,7 +168,7 @@ class _MainPageDrawer extends State<MainPageDrawer> {
                               ),
                               child: ListTile(
                                 title: Text(
-                                  "پرسش و پاسخ",
+                                  "پرسش های متداول",
                                   textDirection: TextDirection.rtl,
                                   style: TextStyle(
                                       color: Color.fromARGB(255, 84, 31, 49),
@@ -202,6 +183,7 @@ class _MainPageDrawer extends State<MainPageDrawer> {
                             )),
                         height: 45,
                       ),
+
                       Container(
                         child: new Directionality(
                             textDirection: TextDirection.rtl,
@@ -211,7 +193,7 @@ class _MainPageDrawer extends State<MainPageDrawer> {
                                     Color.fromARGB(255, 221, 85, 153),
                               ),
                               child: ListTile(
-                                title: Text("نکات ورزشی ماهانه",
+                                title: Text("بارداری و ورزش",
                                     textDirection: TextDirection.rtl,
                                     style: TextStyle(
                                         fontFamily: "Terafik",
@@ -225,7 +207,9 @@ class _MainPageDrawer extends State<MainPageDrawer> {
                               ),
                             )),
                         height: 45,
-                      ), //
+                      ),
+
+                      //
                       Container(
                         child: new Directionality(
                             textDirection: TextDirection.rtl,
@@ -235,7 +219,7 @@ class _MainPageDrawer extends State<MainPageDrawer> {
                                     Color.fromARGB(255, 221, 85, 153),
                               ),
                               child: ListTile(
-                                title: Text("توصیه های روانی",
+                                title: Text("اصول تغذیه در بارداری",
                                     textDirection: TextDirection.rtl,
                                     style: TextStyle(
                                         fontFamily: "Terafik",
@@ -250,6 +234,7 @@ class _MainPageDrawer extends State<MainPageDrawer> {
                             )),
                         height: 45,
                       ),
+
                       Container(
                         child: new Directionality(
                             textDirection: TextDirection.rtl,
@@ -259,7 +244,7 @@ class _MainPageDrawer extends State<MainPageDrawer> {
                                     Color.fromARGB(255, 221, 85, 153),
                               ),
                               child: ListTile(
-                                title: Text("ویژه پدران",
+                                title: Text("عوارض شایع بارداری",
                                     textDirection: TextDirection.rtl,
                                     style: TextStyle(
                                         fontFamily: "Terafik",
@@ -274,6 +259,7 @@ class _MainPageDrawer extends State<MainPageDrawer> {
                             )),
                         height: 45,
                       ),
+
                       Container(
                         height: 45,
                         child: new Directionality(
@@ -298,6 +284,7 @@ class _MainPageDrawer extends State<MainPageDrawer> {
                               ),
                             )),
                       ),
+
                       new Directionality(
                           textDirection: TextDirection.rtl,
                           child: Theme(
@@ -316,8 +303,18 @@ class _MainPageDrawer extends State<MainPageDrawer> {
                                 color: Color.fromARGB(255, 84, 31, 49),
                                 textDirection: TextDirection.rtl,
                               ),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        TableDesign(),
+                                  ),
+                                );
+                              },
                             ),
                           )),
+
                       SizedBox(
                         height: 20,
                       ),

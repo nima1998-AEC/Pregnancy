@@ -10,7 +10,8 @@ import 'package:pregnancy_app/Model/MotherPropoerties.dart';
 import 'package:pregnancy_app/Source/LoadingFunctions.dart';
 import 'package:pregnancy_app/Source/Other.dart';
 import 'package:pregnancy_app/Source/ProfilePageSource.dart';
-import 'package:pregnancy_app/Source/savingFunctions.dart';
+import 'package:pregnancy_app/Source/SavingFunctions.dart';
+import 'package:pregnancy_app/Source/Table.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -77,8 +78,23 @@ class _ProfilePage extends State<ProfilePage> {
           bmi = motherProperties.bmi.toStringAsFixed(2).toString();
           status = motherProperties.status;
           notNull = true;
+          changeStatusColor(bmi);
         });
       }
+    });
+  }
+
+  Color statusColor = Color.fromARGB(255, 221, 85, 153);
+
+  changeStatusColor(String bmi) {
+    setState(() {
+      if (double.parse(bmi) < 5.18)
+        statusColor = Colors.yellow[400];
+      else if (double.parse(bmi) >= 5.18 && double.parse(bmi) < 9.24)
+        statusColor = Colors.green[300];
+      else if (double.parse(bmi) >= 9.29 && double.parse(bmi) < 25)
+        statusColor = Colors.orange[500];
+      else if (double.parse(bmi) >= 30) statusColor = Colors.redAccent;
     });
   }
 
@@ -280,10 +296,11 @@ class _ProfilePage extends State<ProfilePage> {
                                       'BMI محاسبه',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 221, 85, 153),
-                                          fontSize: 16,
-                                          fontFamily: "Yekan"),
+                                        color:
+                                            Color.fromARGB(255, 221, 85, 153),
+                                        fontSize: 16,
+                                        fontFamily: "Yekan",
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -320,6 +337,7 @@ class _ProfilePage extends State<ProfilePage> {
                                       status = calculationBmi(
                                           heightController.text,
                                           weightController.text)[1];
+                                      changeStatusColor(bmi);
                                     }
                                   });
                                 },
@@ -436,8 +454,7 @@ class _ProfilePage extends State<ProfilePage> {
                                       padding: EdgeInsets.only(
                                           top: 4.0, bottom: 4.0),
                                       decoration: BoxDecoration(
-                                        color:
-                                            Color.fromARGB(255, 221, 85, 153),
+                                        color: statusColor,
                                         borderRadius:
                                             BorderRadius.circular(16.0),
                                       ),
@@ -461,6 +478,10 @@ class _ProfilePage extends State<ProfilePage> {
                       ),
                     ],
                   ),
+                ),
+                Container(
+                  child: TableDesign(),
+                  margin: EdgeInsets.only(left: 16, right: 16, top: 20),
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 16, right: 16, top: 12),
