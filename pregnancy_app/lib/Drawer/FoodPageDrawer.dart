@@ -6,11 +6,11 @@ import 'package:pregnancy_app/Design/HistoryPageDesign.dart';
 import 'package:pregnancy_app/Design/ProfilePageDesign.dart';
 import 'package:pregnancy_app/Source/Table.dart';
 
-class MainPageDrawer extends StatefulWidget {
-  State<StatefulWidget> createState() => _MainPageDrawer();
+class FoodPageDrawer extends StatefulWidget {
+  State<StatefulWidget> createState() => _FoodPageDrawer();
 }
 
-class _MainPageDrawer extends State<MainPageDrawer> {
+class _FoodPageDrawer extends State<FoodPageDrawer> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -220,38 +220,6 @@ class _MainPageDrawer extends State<MainPageDrawer> {
                                     Color.fromARGB(255, 221, 85, 153),
                               ),
                               child: ListTile(
-                                title: Text("اصول تغذیه در بارداری",
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(
-                                        fontFamily: "Terafik",
-                                        color: Color.fromARGB(255, 84, 31, 49),
-                                        fontWeight: FontWeight.bold)),
-                                leading: Icon(
-                                  FontAwesomeIcons.universalAccess,
-                                  color: Color.fromARGB(255, 84, 31, 49),
-                                  textDirection: TextDirection.rtl,
-                                ),
-                                onTap: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (cnx) => FoodDesign(),
-                                    ),
-                                  );
-                                },
-                              ),
-                            )),
-                        height: 45,
-                      ),
-
-                      Container(
-                        child: new Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: Theme(
-                              data: ThemeData(
-                                highlightColor:
-                                    Color.fromARGB(255, 221, 85, 153),
-                              ),
-                              child: ListTile(
                                 title: Text("عوارض شایع بارداری",
                                     textDirection: TextDirection.rtl,
                                     style: TextStyle(
@@ -311,15 +279,7 @@ class _MainPageDrawer extends State<MainPageDrawer> {
                                 color: Color.fromARGB(255, 84, 31, 49),
                                 textDirection: TextDirection.rtl,
                               ),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        TableDesign(),
-                                  ),
-                                );
-                              },
+                              onTap: () {},
                             ),
                           )),
 

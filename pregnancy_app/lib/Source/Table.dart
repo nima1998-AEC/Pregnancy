@@ -43,7 +43,7 @@ class TableDesignState extends State<TableDesign> {
         border: TableBorder.all(color: Colors.black, width: 1.0),
         // defaultColumnWidth: FixedColumnWidth(150.0),
         children: [
-          buildTableRow('وضعیت تغذیه', 'توده بدنی قبل از بارداری\n (kg/m²)', 'محدوده مجاز افزایش \n وزن (کیلوگرم)', 'افزایش وزن از ابتدای هفته 13 بارداری به  بعد(کیلوگرم/هفته)', Colors.white , 80),
+          buildTableRow('وضعیت تغذیه', 'توده بدنی قبل از بارداری\n (kg/m²)', 'محدوده مجاز افزایش \n وزن (کیلوگرم)', 'افزایش وزن از ابتدای هفته 13 بارداری به  بعد(کیلوگرم/هفته)', Colors.white , 90),
           buildTableRow('کم وزن', 'کمتر از 5.18', '5.12 - 18', '5.0', Colors.yellow , 40),
           buildTableRow('طبیعی', '5.18 - 9.24', '5.11 - 16', '4.0', Colors.green , 40),
           buildTableRow('اضافه وزن', '9.29 - 25', '5.11 - 7', '3.0', Colors.orange , 40),
