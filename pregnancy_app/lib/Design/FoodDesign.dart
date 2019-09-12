@@ -50,7 +50,7 @@ class _FoodDesign extends State<FoodDesign> {
                   borderRadius: BorderRadius.circular(16.0),
                   border: Border.all(
                     color: Color.fromARGB(255, 221, 85, 153),
-                    width: 2, 
+                    width: 2,
                   ),
                 ),
                 child: Text(
@@ -61,19 +61,18 @@ class _FoodDesign extends State<FoodDesign> {
               ),
               GestureDetector(
                 child: Container(
-                  color: Colors.blue,
-                  // height: 100,
-                  // width: 250,
-                  child: Text(
-                    "متفرقه",
-                    style: TextStyle(
-                      fontSize: 32,
-                    ),
+                  margin: EdgeInsets.only(bottom: 4.0),
+                  child: Image.asset(
+                    "assets/Food1.png",
+                    height: 100,
                   ),
                 ),
                 onTap: () {
-                  showAlertDialog(context, "متفرقه",
-                      "این گروه که در راس هرم غذایی قراردارند شامل روغن ها و چربی ها، شیرینی ها و قندهای ساده، ترشی ها و شورها و نوشیدنی ها هستند مصرف این غذاها باید تا حد امکان کمتر باشد");
+                  showAlertDialog(
+                      context,
+                      "متفرقه",
+                      "این گروه که در راس هرم غذایی قراردارند شامل روغن ها و چربی ها، شیرینی ها و قندهای ساده، ترشی ها و شورها و نوشیدنی ها هستند مصرف این غذاها باید تا حد امکان کمتر باشد",
+                      "assets/Food1.png");
                 },
               ),
               Row(
@@ -81,66 +80,55 @@ class _FoodDesign extends State<FoodDesign> {
                   Expanded(
                     child: GestureDetector(
                       child: Container(
+                        margin: EdgeInsets.only(bottom: 4.0),
                         alignment: Alignment.center,
-
-                        margin: EdgeInsets.all(16.0),
-                        color: Colors.blue,
-                        // height: 100,
-                        // width: 250,
-                        child: Text(
-                          "شیر و فرآورده ها",
-                          style: TextStyle(
-                            fontSize: 24,
-                          ),
+                        child: Image.asset(
+                          "assets/Food2.png",
+                          height: 100,
                         ),
                       ),
                       onTap: () {
-                        showAlertDialog(context, "شیر و فرآورده ها",
-                            "این گروه شامل شیر، پنیر، ماست، دوغ و بستنی می باشد و نامین کننده عمده پروتئین، کلسیم و فسفر می باشد. روزانه باید دو تا سه واحد از این گروه مصرف شود\nهر واحد از این گروه معادل: یک لیوان شیر یا ماست ، 60 گرم پنیر یا دو لیوان دوغ میباشد");
+                        showAlertDialog(
+                            context,
+                            "شیر و فرآورده ها",
+                            "این گروه شامل شیر، پنیر، ماست، دوغ و بستنی می باشد و نامین کننده عمده پروتئین، کلسیم و فسفر می باشد. روزانه باید دو تا سه واحد از این گروه مصرف شود\nهر واحد از این گروه معادل: یک لیوان شیر یا ماست ، 60 گرم پنیر یا دو لیوان دوغ میباشد",
+                            "assets/Food2.png");
                       },
                     ),
                   ),
-                  Expanded(
-                    child: GestureDetector(
-                      child: Container(
-                        alignment: Alignment.center,
-
-                        margin: EdgeInsets.all(16.0),
-                        color: Colors.blue,
-                        // height: 100,
-                        // width: 250,
-                        child: Text(
+                  GestureDetector(
+                    child: Container(
+                      margin: EdgeInsets.only(bottom: 4.0),
+                      alignment: Alignment.center,
+                      child: Image.asset(
+                        "assets/Food3.png",
+                        height: 100,
+                      ),
+                    ),
+                    onTap: () {
+                      showAlertDialog(
+                          context,
                           "حبوبات و مغزها",
-                          style: TextStyle(
-                            fontSize: 32,
-                          ),
-                        ),
-                      ),
-                      onTap: () {
-                        showAlertDialog(context, "حبوبات و مغزها",
-                            "این گروه شامل انواع حبوبات مثل نخود، لوبیا، باقلا، لپه و عدس و انواع مغزها مثل گردو، فندق، پسته و بادام می باشد. این گروه تامین کننده پروتئین و املاح برای بدن می باشد. روزانه باید یک واحد از این گروه مصرف شود\nهر واحد از این گروه معادل: نصف لیوان حبوبات پخته یا یک سوم لیوان انواع مغزهااست");
-                      },
-                    ),
+                          "این گروه شامل انواع حبوبات مثل نخود، لوبیا، باقلا، لپه و عدس و انواع مغزها مثل گردو، فندق، پسته و بادام می باشد. این گروه تامین کننده پروتئین و املاح برای بدن می باشد. روزانه باید یک واحد از این گروه مصرف شود\nهر واحد از این گروه معادل: نصف لیوان حبوبات پخته یا یک سوم لیوان انواع مغزهااست",
+                          "assets/Food3.png");
+                    },
                   ),
                   Expanded(
                     child: GestureDetector(
                       child: Container(
+                        margin: EdgeInsets.only(bottom: 4.0),
                         alignment: Alignment.center,
-
-                        margin: EdgeInsets.all(16.0),
-                        color: Colors.blue,
-                        // height: 100,
-                        // width: 250,
-                        child: Text(
-                          "گوشت و تخم مرغ",
-                          style: TextStyle(
-                            fontSize: 32,
-                          ),
+                        child: Image.asset(
+                          "assets/Food4.png",
+                          height: 100,
                         ),
                       ),
                       onTap: () {
-                        showAlertDialog(context, "گوشت و تخم مرغ",
-                            "این گروه شامل انواع گوشت سفید و قرمز و تخم مرغ می باشد و تامین کننده مهم پروتئین، آهن، روی و بعضی از انواع ویتامین‌های گروه ب میباشد. روزانه باید یک تا دو واحد از این گروه مصرف شود\nهر واحد از این گروه معادل: شصت گرم گوشت پخته شده یا دو قطعه خورشتی ، یک تکه ماهی به اندازه یک کف دست بدون انگشت ، نصف ران متوسط یا نصف سینه متوسط مرغ یا دو عدد تخم مرغ است");
+                        showAlertDialog(
+                            context,
+                            "گوشت و تخم مرغ",
+                            "این گروه شامل انواع گوشت سفید و قرمز و تخم مرغ می باشد و تامین کننده مهم پروتئین، آهن، روی و بعضی از انواع ویتامین‌های گروه ب میباشد. روزانه باید یک تا دو واحد از این گروه مصرف شود\nهر واحد از این گروه معادل: شصت گرم گوشت پخته شده یا دو قطعه خورشتی ، یک تکه ماهی به اندازه یک کف دست بدون انگشت ، نصف ران متوسط یا نصف سینه متوسط مرغ یا دو عدد تخم مرغ است",
+                            "assets/Food4.png");
                       },
                     ),
                   ),
@@ -148,67 +136,55 @@ class _FoodDesign extends State<FoodDesign> {
               ),
               Row(
                 children: <Widget>[
-                  Expanded(
-                    child: GestureDetector(
-                      child: Container(
-                        alignment: Alignment.center,
-
-                        margin: EdgeInsets.all(16.0),
-                        color: Colors.blue,
-                        // height: 100,
-                        // width: 250,
-                        child: Text(
+                  GestureDetector(
+                    child: Container(
+                      margin: EdgeInsets.only(bottom: 4.0, right: 4.0),
+                      alignment: Alignment.center,
+                      child: Image.asset(
+                        "assets/Food5.png",
+                        height: 100,
+                      ),
+                    ),
+                    onTap: () {
+                      showAlertDialog(
+                          context,
                           "سبزی ها",
-                          style: TextStyle(
-                            fontSize: 32,
-                          ),
-                        ),
-                      ),
-                      onTap: () {
-                        showAlertDialog(context, "سبزی ها",
-                            "این گروه شامل انواع سبزی، خیار، گوجه فرنگی، پیاز، لوبیا سبز، انواع کلم و کدو می باشد. این گروه تامین کننده عمده ویتامینها و املاحی مثل پتاسیم، منیزیم و آهن و همچنین فیبر می باشد. روزانه باید سه تا پنج واحد از این گروه مصرف شود\nهر واحد از این گروه معادل: یک لیوان سبزی برگی ، نصف لیوان سبزی پخته یا سبزی خام خورد شده یا یک عدد خیار یا گوجه فرنگی متوسط می باشد");
-                      },
-                    ),
+                          "این گروه شامل انواع سبزی، خیار، گوجه فرنگی، پیاز، لوبیا سبز، انواع کلم و کدو می باشد. این گروه تامین کننده عمده ویتامینها و املاحی مثل پتاسیم، منیزیم و آهن و همچنین فیبر می باشد. روزانه باید سه تا پنج واحد از این گروه مصرف شود\nهر واحد از این گروه معادل: یک لیوان سبزی برگی ، نصف لیوان سبزی پخته یا سبزی خام خورد شده یا یک عدد خیار یا گوجه فرنگی متوسط می باشد",
+                          "assets/Food5.png");
+                    },
                   ),
-                  Expanded(
-                    child: GestureDetector(
-                      child: Container(
-                        alignment: Alignment.center,
-
-                        margin: EdgeInsets.all(16.0),
-                        color: Colors.blue,
-                        // height: 100,
-                        // width: 250,
-                        child: Text(
-                          "میوه ها",
-                          style: TextStyle(
-                            fontSize: 32,
-                          ),
-                        ),
+                  GestureDetector(
+                    child: Container(
+                      margin: EdgeInsets.only(bottom: 4.0, left: 4.0),
+                      alignment: Alignment.center,
+                      child: Image.asset(
+                        "assets/Food6.png",
+                        height: 100,
                       ),
-                      onTap: () {
-                        showAlertDialog(context, "میوه ها",
-                            "این گروه شامل انواع میوه، آب میوه طبیعی و میوه های خشک می باشد. این گروه تامین کننده عمده ویتامینها و املاحی مثل پتاسیم و منیزیم می باشد. روزانه باید دو تا چهار واحد از این گروه مصرف شود\nهر واحد از این گروه معادل: یک عدد میوه متوسط، نصف لیوان آب میوه طبیعی ، نصف لیوان میوه های ریز مثل توت یا یک چهارم لیوان میوه خشک می باشد");
-                      },
                     ),
+                    onTap: () {
+                      showAlertDialog(
+                          context,
+                          "میوه ها",
+                          "این گروه شامل انواع میوه، آب میوه طبیعی و میوه های خشک می باشد. این گروه تامین کننده عمده ویتامینها و املاحی مثل پتاسیم و منیزیم می باشد. روزانه باید دو تا چهار واحد از این گروه مصرف شود\nهر واحد از این گروه معادل: یک عدد میوه متوسط، نصف لیوان آب میوه طبیعی ، نصف لیوان میوه های ریز مثل توت یا یک چهارم لیوان میوه خشک می باشد",
+                          "assets/Food6.png");
+                    },
                   ),
                 ],
               ),
               GestureDetector(
                 child: Container(
-                  color: Colors.blue,
-                  // height: 100,
-                  // width: 250,
-                  child: Text(
-                    "نان و غلات",
-                    style: TextStyle(
-                      fontSize: 32,
-                    ),
+                  child: Image.asset(
+                    "assets/Food7.png",
+                    height: 100,
                   ),
                 ),
                 onTap: () {
-                  showAlertDialog(context, "نان و غلات",
-                      "این گروه شامل انواع نان، برنج و ماکارونی می باشد. این گروه تامین کننده عمده انرژی، کربوهیدرات پیچیده، فیبر و برخی ویتامینهای گروه ب می باشد. روزانه باید 7 تا 11 واحد از این گروه مصرف شود\n هر واحد از این گروه معادل: یک کف دست بدون انگشت انواع نان ، سه کف دست با انگشت نان لواش ، نصف لیوان برنج پخته یا نصف لیوان ماکارونی پخته یا سه عدد بیسکئویت متوسط می باشد");
+                  showAlertDialog(
+                      context,
+                      "نان و غلات",
+                      "این گروه شامل انواع نان، برنج و ماکارونی می باشد. این گروه تامین کننده عمده انرژی، کربوهیدرات پیچیده، فیبر و برخی ویتامینهای گروه ب می باشد. روزانه باید 7 تا 11 واحد از این گروه مصرف شود\n هر واحد از این گروه معادل: یک کف دست بدون انگشت انواع نان ، سه کف دست با انگشت نان لواش ، نصف لیوان برنج پخته یا نصف لیوان ماکارونی پخته یا سه عدد بیسکئویت متوسط می باشد",
+                      "assets/Food7.png");
                 },
               ),
             ],
@@ -218,24 +194,24 @@ class _FoodDesign extends State<FoodDesign> {
     );
   }
 
-  showAlertDialog(BuildContext context, String title, String msg) {
+  showAlertDialog(BuildContext context, String title, String msg, String file) {
     // set up the button
-    Widget cancelButton = FlatButton(
-      child: Text("خروج"),
-      onPressed: () {
-        // Navigator.of(context).pop();
-      },
-    );
+    // Widget cancelButton = FlatButton(
+    //   child: Text("خروج"),
+    //   onPressed: () {
+    //     Navigator.of(context).pop();
+    //   },
+    // );
 
-    Widget okButton = Container(
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Icon(Icons.person),
-          )
-        ],
-      ),
-    );
+    // Widget okButton = Container(
+    //   child: Row(
+    //     children: <Widget>[
+    //       Expanded(
+    //         child: Icon(Icons.person),
+    //       )
+    //     ],
+    //   ),
+    // );
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
@@ -246,9 +222,9 @@ class _FoodDesign extends State<FoodDesign> {
           Expanded(
             child: Container(
               alignment: Alignment.topLeft,
-              child: Icon(
-                Icons.ac_unit,
-                size: 50,
+              child: Image.asset(
+                file,
+                height: 60,
               ),
             ),
           ),
@@ -267,10 +243,6 @@ class _FoodDesign extends State<FoodDesign> {
           textAlign: TextAlign.right,
         ),
       ),
-      actions: [
-        // okButton,
-        cancelButton,
-      ],
     );
 
     // show the dialog
