@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pregnancy_app/Design/IntroPage_A.dart';
 import 'package:pregnancy_app/Design/LoadPageDesign.dart';
 
 import 'package:pregnancy_app/Design/MainPageDesign.dart';
@@ -17,7 +18,6 @@ class _MyApp extends State<MyApp> {
   void initState() {
     super.initState();
   }
-
 
 //   firstOpenChecker() async {
 //     DateTime now, secondNow;
@@ -53,7 +53,9 @@ class _MyApp extends State<MyApp> {
       },
       home: Scaffold(
         backgroundColor: Color.fromRGBO(250, 246, 244, 10),
-        body: LoadPage(),
+        body: IntroPageA(),
+
+        // LoadPage(),
       ),
     );
   }
