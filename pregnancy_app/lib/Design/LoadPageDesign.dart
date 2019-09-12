@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as prefix0;
+import 'package:pregnancy_app/Design/IntroPage_A.dart';
 import 'dart:async';
 
 import 'package:pregnancy_app/Source/LoadingFunctions.dart';
@@ -90,7 +92,11 @@ class _LoadPage extends State<LoadPage> {
       } else {
         debugPrint(
             "User information is`t saved, Navigation to Profile Page ... ");
-        Navigator.of(context).pushReplacementNamed('/ProfilePage');
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (cnx) => IntroPageA(),
+          ),
+        );
         normalWeekWeightDataList();
       }
     });

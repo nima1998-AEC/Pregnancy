@@ -116,24 +116,20 @@ class _IntroPageB extends State<IntroPageB> {
           ],
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   child: Container(
-      //     child: Icon(
-      //       Icons.arrow_forward,
-      //       size: 40.0,
-      //       color: Color.fromARGB(255, 221, 85, 153),
-      //     ),
-      //   ),
-      //   backgroundColor: Colors.white.withOpacity(0.6),
-      //   elevation: 6.0,
-      //   onPressed: () {
-      //     Navigator.of(context).pushReplacement(
-      //       MaterialPageRoute(
-      //         builder: (cnx) => ProfilePage(),
-      //       ),
-      //     );
-      //   },
-      // ),
+      floatingActionButton: FloatingActionButton(
+        child: Container(
+          child: Icon(
+            Icons.arrow_forward,
+            size: 40.0,
+            color: Color.fromARGB(255, 221, 85, 153),
+          ),
+        ),
+        backgroundColor: Colors.white.withOpacity(0.6),
+        elevation: 6.0,
+        onPressed: () {
+          Navigator.of(context).pushReplacementNamed('/ProfilePage');
+        },
+      ),
     );
   }
 }

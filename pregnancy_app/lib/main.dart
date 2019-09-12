@@ -53,9 +53,8 @@ class _MyApp extends State<MyApp> {
       },
       home: Scaffold(
         backgroundColor: Color.fromRGBO(250, 246, 244, 10),
-        body: IntroPageA(),
-
-        // LoadPage(),
+        body: LoadPage(),
+        // IntroPageA(),
       ),
     );
   }
