@@ -5,6 +5,7 @@ import 'package:pregnancy_app/Design/FoodDesign.dart';
 import 'package:pregnancy_app/Design/HistoryPageDesign.dart';
 import 'package:pregnancy_app/Design/ProfilePageDesign.dart';
 import 'package:pregnancy_app/Source/Table.dart';
+import 'package:pregnancy_app/Design/TeachingPoint.dart';
 
 class MainPageDrawer extends StatefulWidget {
   State<StatefulWidget> createState() => _MainPageDrawer();
@@ -122,6 +123,15 @@ class _MainPageDrawer extends State<MainPageDrawer> {
                                   color: Color.fromARGB(255, 84, 31, 49),
                                   textDirection: TextDirection.rtl,
                                 ),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          Point(),
+                                    ),
+                                  );
+                                },
                               ),
                             )),
                         height: 45,

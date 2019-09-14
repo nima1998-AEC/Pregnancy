@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:pregnancy_app/Design/ProfilePageDesign.dart';
 import 'package:pregnancy_app/Design/AddWeightPageDesign.dart';
+import 'package:pregnancy_app/Design/FoodDesign.dart';
+import 'package:pregnancy_app/Design/HistoryPageDesign.dart';
+import 'package:pregnancy_app/Design/ProfilePageDesign.dart';
+import 'package:pregnancy_app/Source/Table.dart';
+import 'package:pregnancy_app/Design/TeachingPoint.dart';
 
 class HistoryPageDrawer extends StatefulWidget {
-  _HistoryPageDrawer createState() => _HistoryPageDrawer();
+  State<StatefulWidget> createState() => HistoryPageDrawerState();
 }
 
-class _HistoryPageDrawer extends State<HistoryPageDrawer> {
+class HistoryPageDrawerState extends State<HistoryPageDrawer> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,11 +21,12 @@ class _HistoryPageDrawer extends State<HistoryPageDrawer> {
           children: <Widget>[
             Container(
               decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage(
-                        "assets/DrawerHeader.png",
-                      ),
-                      fit: BoxFit.fill)),
+                image: DecorationImage(
+                    image: AssetImage(
+                      "assets/DrawerHeader.png",
+                    ),
+                    fit: BoxFit.fill),
+              ),
               height: MediaQuery.of(context).size.height * 0.32,
             ),
             Expanded(
@@ -61,6 +66,7 @@ class _HistoryPageDrawer extends State<HistoryPageDrawer> {
                             )),
                         height: 45,
                       ),
+
                       Container(
                         child: new Directionality(
                           textDirection: TextDirection.rtl,
@@ -96,6 +102,7 @@ class _HistoryPageDrawer extends State<HistoryPageDrawer> {
                         ),
                         height: 45,
                       ),
+
                       Container(
                         child: new Directionality(
                             textDirection: TextDirection.rtl,
@@ -105,7 +112,7 @@ class _HistoryPageDrawer extends State<HistoryPageDrawer> {
                                     Color.fromARGB(255, 221, 85, 153),
                               ),
                               child: ListTile(
-                                title: Text("توصیه های آموزشی",
+                                title: Text("نکات آموزشی ویژه",
                                     textDirection: TextDirection.rtl,
                                     style: TextStyle(
                                         fontFamily: "Terafik",
@@ -116,34 +123,52 @@ class _HistoryPageDrawer extends State<HistoryPageDrawer> {
                                   color: Color.fromARGB(255, 84, 31, 49),
                                   textDirection: TextDirection.rtl,
                                 ),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          Point(),
+                                    ),
+                                  );
+                                },
                               ),
                             )),
                         height: 45,
                       ),
-                      Container(
-                        child: new Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: Theme(
-                              data: ThemeData(
-                                highlightColor:
-                                    Color.fromARGB(255, 221, 85, 153),
-                              ),
-                              child: ListTile(
-                                title: Text("سوابق ثبت وزن",
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(
-                                        fontFamily: "Terafik",
-                                        color: Color.fromARGB(255, 84, 31, 49),
-                                        fontWeight: FontWeight.bold)),
-                                leading: Icon(
-                                  FontAwesomeIcons.chartArea,
-                                  color: Color.fromARGB(255, 84, 31, 49),
-                                  textDirection: TextDirection.rtl,
-                                ),
-                              ),
-                            )),
-                        height: 45,
-                      ),
+
+                      // Container(
+                      //   child: new Directionality(
+                      //       textDirection: TextDirection.rtl,
+                      //       child: Theme(
+                      //         data: ThemeData(
+                      //           highlightColor:
+                      //               Color.fromARGB(255, 221, 85, 153),
+                      //         ),
+                      //         child: ListTile(
+                      //           title: Text("مشاهده روند رشد",
+                      //               textDirection: TextDirection.rtl,
+                      //               style: TextStyle(
+                      //                   fontFamily: "Terafik",
+                      //                   color: Color.fromARGB(255, 84, 31, 49),
+                      //                   fontWeight: FontWeight.bold)),
+                      //           leading: Icon(
+                      //             FontAwesomeIcons.chartArea,
+                      //             color: Color.fromARGB(255, 84, 31, 49),
+                      //             textDirection: TextDirection.rtl,
+                      //           ),
+                      //           onTap: () {
+                      //             Navigator.push(
+                      //                 context,
+                      //                 MaterialPageRoute(
+                      //                     builder: (BuildContext context) =>
+                      //                         HistoryPage()));
+                      //           },
+                      //         ),
+                      //       )),
+                      //   height: 45,
+                      // ),
+
                       Container(
                         child: new Directionality(
                             textDirection: TextDirection.rtl,
@@ -154,7 +179,7 @@ class _HistoryPageDrawer extends State<HistoryPageDrawer> {
                               ),
                               child: ListTile(
                                 title: Text(
-                                  "پرسش و پاسخ",
+                                  "پرسش های متداول",
                                   textDirection: TextDirection.rtl,
                                   style: TextStyle(
                                       color: Color.fromARGB(255, 84, 31, 49),
@@ -169,6 +194,7 @@ class _HistoryPageDrawer extends State<HistoryPageDrawer> {
                             )),
                         height: 45,
                       ),
+
                       Container(
                         child: new Directionality(
                             textDirection: TextDirection.rtl,
@@ -178,7 +204,7 @@ class _HistoryPageDrawer extends State<HistoryPageDrawer> {
                                     Color.fromARGB(255, 221, 85, 153),
                               ),
                               child: ListTile(
-                                title: Text("نکات ورزشی ماهانه",
+                                title: Text("بارداری و ورزش",
                                     textDirection: TextDirection.rtl,
                                     style: TextStyle(
                                         fontFamily: "Terafik",
@@ -192,7 +218,9 @@ class _HistoryPageDrawer extends State<HistoryPageDrawer> {
                               ),
                             )),
                         height: 45,
-                      ), //
+                      ),
+
+                      //
                       Container(
                         child: new Directionality(
                             textDirection: TextDirection.rtl,
@@ -202,7 +230,7 @@ class _HistoryPageDrawer extends State<HistoryPageDrawer> {
                                     Color.fromARGB(255, 221, 85, 153),
                               ),
                               child: ListTile(
-                                title: Text("توصیه های روانی",
+                                title: Text("اصول تغذیه در بارداری",
                                     textDirection: TextDirection.rtl,
                                     style: TextStyle(
                                         fontFamily: "Terafik",
@@ -213,10 +241,18 @@ class _HistoryPageDrawer extends State<HistoryPageDrawer> {
                                   color: Color.fromARGB(255, 84, 31, 49),
                                   textDirection: TextDirection.rtl,
                                 ),
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (cnx) => FoodDesign(),
+                                    ),
+                                  );
+                                },
                               ),
                             )),
                         height: 45,
                       ),
+
                       Container(
                         child: new Directionality(
                             textDirection: TextDirection.rtl,
@@ -226,7 +262,7 @@ class _HistoryPageDrawer extends State<HistoryPageDrawer> {
                                     Color.fromARGB(255, 221, 85, 153),
                               ),
                               child: ListTile(
-                                title: Text("ویژه پدران",
+                                title: Text("عوارض شایع بارداری",
                                     textDirection: TextDirection.rtl,
                                     style: TextStyle(
                                         fontFamily: "Terafik",
@@ -241,6 +277,7 @@ class _HistoryPageDrawer extends State<HistoryPageDrawer> {
                             )),
                         height: 45,
                       ),
+
                       Container(
                         height: 45,
                         child: new Directionality(
@@ -265,6 +302,7 @@ class _HistoryPageDrawer extends State<HistoryPageDrawer> {
                               ),
                             )),
                       ),
+
                       new Directionality(
                           textDirection: TextDirection.rtl,
                           child: Theme(
@@ -283,8 +321,18 @@ class _HistoryPageDrawer extends State<HistoryPageDrawer> {
                                 color: Color.fromARGB(255, 84, 31, 49),
                                 textDirection: TextDirection.rtl,
                               ),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        TableDesign(),
+                                  ),
+                                );
+                              },
                             ),
                           )),
+
                       SizedBox(
                         height: 20,
                       ),
@@ -298,7 +346,7 @@ class _HistoryPageDrawer extends State<HistoryPageDrawer> {
                             color: Colors.grey,
                           ),
                         ),
-                      ),
+                      )
                     ],
                   ),
                 ],

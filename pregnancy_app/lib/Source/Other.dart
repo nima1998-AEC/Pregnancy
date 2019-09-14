@@ -277,3 +277,14 @@ Container chart() {
     ),
   );
 }
+
+Widget foodText(String text, Color color, double fontSize) {
+    return Container(
+        padding: EdgeInsets.all(10),
+        alignment: Alignment.centerRight,
+        child: Text(
+          text,
+          textDirection: TextDirection.rtl,
+          style: TextStyle(color: color, fontSize: fontSize),
+        ));
+  }

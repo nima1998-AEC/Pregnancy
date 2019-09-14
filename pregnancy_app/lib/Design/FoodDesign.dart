@@ -30,7 +30,7 @@ class _FoodDesign extends State<FoodDesign> {
               fit: BoxFit.fill,
             ),
           ),
-          child: ListView(
+          child: Column(
             children: <Widget>[
               SizedBox(
                 height: 25.0,
@@ -39,7 +39,10 @@ class _FoodDesign extends State<FoodDesign> {
               SizedBox(
                 height: 8.0,
               ),
-              Container(
+              Expanded(
+                child: ListView(
+                  children: <Widget>[
+                    Container(
                 margin: EdgeInsets.all(16.0),
                 decoration: BoxDecoration(
                   color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.9),
@@ -52,7 +55,7 @@ class _FoodDesign extends State<FoodDesign> {
                 child: Text(
                   "مواد غذایی که که از نظر ارزش غذایی خواص مشابهی دارند در هرم غذایی در یک گروه قرار می گیرند. شکل هرم به این معنی است که غذاهایی که به سمت کف هرم هستند باید بیشتر و غذاهایی که به سمت نوک هرم هستند باید کمتر مصرف شوند",
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16.0),
+                  style: TextStyle(fontSize: 14.0),
                 ),
               ),
               GestureDetector(
@@ -182,6 +185,9 @@ class _FoodDesign extends State<FoodDesign> {
                       "این گروه شامل انواع نان، برنج و ماکارونی می باشد. این گروه تامین کننده عمده انرژی، کربوهیدرات پیچیده، فیبر و برخی ویتامینهای گروه ب می باشد. روزانه باید 7 تا 11 واحد از این گروه مصرف شود\n هر واحد از این گروه معادل: یک کف دست بدون انگشت انواع نان ، سه کف دست با انگشت نان لواش ، نصف لیوان برنج پخته یا نصف لیوان ماکارونی پخته یا سه عدد بیسکئویت متوسط می باشد",
                       "assets/Food7.png");
                 },
+              ),
+                  ],
+                ),
               ),
             ],
           ),
