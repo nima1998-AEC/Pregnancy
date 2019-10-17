@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pregnancy_app/Design/AddWeightPageDesign.dart';
 import 'package:pregnancy_app/Design/FoodDesign.dart';
-import 'package:pregnancy_app/Design/HistoryPageDesign.dart';
 import 'package:pregnancy_app/Design/ProfilePageDesign.dart';
 import 'package:pregnancy_app/Source/Table.dart';
 import 'package:pregnancy_app/Design/TeachingPoint.dart';

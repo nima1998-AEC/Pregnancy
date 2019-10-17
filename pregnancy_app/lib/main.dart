@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pregnancy_app/Design/IntroPage_A.dart';
 import 'package:pregnancy_app/Design/LoadPageDesign.dart';
 
 import 'package:pregnancy_app/Design/MainPageDesign.dart';

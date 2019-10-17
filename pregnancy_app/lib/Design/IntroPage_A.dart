@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pregnancy_app/Design/IntroPage_B.dart';
-import 'package:assets_audio_player/assets_audio_player.dart';
 
 class IntroPageA extends StatefulWidget {
   @override
