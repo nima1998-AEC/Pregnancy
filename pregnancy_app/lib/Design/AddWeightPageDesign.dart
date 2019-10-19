@@ -3,10 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:persian_datepicker/persian_datepicker.dart';
+import 'package:persian_datepicker/persian_datetime.dart';
 
 import 'package:pregnancy_app/Drawer/AddWeightPageDrawer.dart';
 import 'package:pregnancy_app/Source/AddWeightPageSource.dart';
 import 'package:pregnancy_app/Source/Other.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddWeightPage extends StatefulWidget {
   @override
@@ -28,6 +30,7 @@ class _AddWeightPage extends State<AddWeightPage> {
   @override
   void initState() {
     super.initState();
+
     persianDatePickerWidget();
     callFunctions();
     debugPrint('call Functions in AddWeigth ...');
@@ -71,33 +74,33 @@ class _AddWeightPage extends State<AddWeightPage> {
                         ],
                         textDirection: TextDirection.rtl,
                       ),
-                      Directionality(
-                        child: Container(
-                          child: DropdownButton(
-                              hint: weekController.isEmpty
-                                  ? Text(
-                                      "هفته بارداری",
-                                    )
-                                  : Text(
-                                      weekController,
-                                    ),
-                              isExpanded: true,
-                              items: weeksList()
-                                  .map<DropdownMenuItem>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                              onChanged: (value) {
-                                setState(() {
-                                  weekController = value;
-                                });
-                              }),
-                          margin: EdgeInsets.all(10.0),
-                        ),
-                        textDirection: TextDirection.rtl,
-                      ),
+                      // Directionality(
+                      //   child: Container(
+                      //     child: DropdownButton(
+                      //         hint: weekController.isEmpty
+                      //             ? Text(
+                      //                 "هفته بارداری",
+                      //               )
+                      //             : Text(
+                      //                 weekController,
+                      //               ),
+                      //         isExpanded: true,
+                      //         items: weeksList()
+                      //             .map<DropdownMenuItem>((String value) {
+                      //           return DropdownMenuItem<String>(
+                      //             value: value,
+                      //             child: Text(value),
+                      //           );
+                      //         }).toList(),
+                      //         onChanged: (value) {
+                      //           setState(() {
+                      //             weekController = value;
+                      //           });
+                      //         }),
+                      //     margin: EdgeInsets.all(10.0),
+                      //   ),
+                      //   textDirection: TextDirection.rtl,
+                      // ),
                       Directionality(
                         child: Container(
                           child: TextFormField(
@@ -111,67 +114,69 @@ class _AddWeightPage extends State<AddWeightPage> {
                         ),
                         textDirection: TextDirection.rtl,
                       ),
-                      Directionality(
-                        child: Container(
-                          child: TextField(
-                            decoration: InputDecoration(hintText: 'تاریخ ثبت'),
-                            enableInteractiveSelection: true,
-                            onTap: () {
-                              FocusScope.of(context).requestFocus(
-                                  new FocusNode()); // to prevent opening default keyboard
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return persianDatePicker;
-                                  });
-                            },
-                            controller: dateController,
-                          ),
-                          margin: EdgeInsets.all(10.0),
-                        ),
-                        textDirection: TextDirection.rtl,
-                      ),
+                      // Directionality(
+                      //   child: Container(
+                      //     child: TextField(
+                      //       decoration: InputDecoration(hintText: 'تاریخ ثبت'),
+                      //       enableInteractiveSelection: true,
+                      //       onTap: () {
+                      //         FocusScope.of(context).requestFocus(
+                      //             new FocusNode()); // to prevent opening default keyboard
+                      //         showModalBottomSheet(
+                      //             context: context,
+                      //             builder: (BuildContext context) {
+                      //               return persianDatePicker;
+                      //             });
+                      //       },
+                      //       controller: dateController,
+                      //     ),
+                      //     margin: EdgeInsets.all(10.0),
+                      //   ),
+                      //   textDirection: TextDirection.rtl,
+                      // ),
                       Container(
                         width: 140.0,
                         child: RaisedButton(
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(14.0),
-                              side: BorderSide(
+                          color: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(14.0),
+                            side: BorderSide(
+                                color: Color.fromARGB(255, 221, 85, 153),
+                                width: 2.0),
+                          ),
+                          child: Row(
+                            textDirection: TextDirection.rtl,
+                            children: <Widget>[
+                              Icon(
+                                FontAwesomeIcons.solidCalendarCheck,
+                                color: Color.fromARGB(255, 221, 85, 153),
+                              ),
+                              Text(
+                                'محاسبه',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
                                   color: Color.fromARGB(255, 221, 85, 153),
-                                  width: 2.0),
-                            ),
-                            child: Row(
-                              textDirection: TextDirection.rtl,
-                              children: <Widget>[
-                                Icon(
-                                  FontAwesomeIcons.solidCalendarCheck,
-                                  color: Color.fromARGB(255, 221, 85, 153),
+                                  fontSize: 16,
+                                  fontFamily: "Yekan",
                                 ),
-                                Text(
-                                  'محاسبه',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 221, 85, 153),
-                                      fontSize: 16,
-                                      fontFamily: "Yekan"),
-                                ),
-                              ],
-                            ),
-                            onPressed: () {
-                              bool _valid = calucateValidation(
-                                  weekController, weightController.text);
-                              if (_valid) {
-                                callCalucateFunction();
-                              } else {
-                                Fluttertoast.showToast(
-                                  msg: 'اطلاعات را بصورت کامل وارد نمایید',
-                                  backgroundColor:
-                                      Color.fromARGB(255, 218, 86, 152)
-                                          .withOpacity(0.8),
-                                );
-                              }
-                            }),
+                              ),
+                            ],
+                          ),
+                          onPressed: () {
+                            bool _valid =
+                                calucateValidation(weightController.text);
+                            if (_valid) {
+                              callCalucateFunction();
+                            } else {
+                              Fluttertoast.showToast(
+                                msg: 'اطلاعات را بصورت کامل وارد نمایید',
+                                backgroundColor:
+                                    Color.fromARGB(255, 218, 86, 152)
+                                        .withOpacity(0.8),
+                              );
+                            }
+                          },
+                        ),
                         margin: EdgeInsets.all(16.0),
                       ),
                     ],
@@ -385,9 +390,11 @@ class _AddWeightPage extends State<AddWeightPage> {
                             ],
                           ),
                           onPressed: () {
-                            validation(context, weekController,
-                                weightController.text, dateController.text);
-                                
+                            validation(
+                                context,
+                                weekController,
+                                weightController.text,
+                                PersianDateTime.fromGregorian().toString());
                           },
                         ),
                       ),
@@ -467,7 +474,18 @@ class _AddWeightPage extends State<AddWeightPage> {
     ).init();
   }
 
+  PersianDateTime dateTime;
+
   Future<void> callFunctions() async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    setState(() {
+      dateTime = PersianDateTime(jalaaliDateTime: sp.getString("date"));
+      weekController =
+          (PersianDateTime.fromGregorian().difference(dateTime).inDays / 7)
+              .ceil()
+              .toString();
+      print("kghoifjhligsflhbm ====> $weekController");
+    });
     String _setWeightChangeFromScratch,
         _setweightChangeFromLastWeek,
         _setStatus;

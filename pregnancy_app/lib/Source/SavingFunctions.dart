@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:persian_datepicker/persian_datetime.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -719,7 +720,15 @@ Future<void> saveProfileData(String name, int age, double height, double weight,
 
   // Initial Last Week AND Last Weight AND Last Change Weight
   sp.setDouble('lastWeight', weight);
-  sp.setString('lastWeek', '1');
+  sp.setString(
+      'lastWeek',
+      (((PersianDateTime.fromGregorian()
+                      .difference(PersianDateTime(jalaaliDateTime: date))
+                      .inDays) /
+                  7)
+              .ceil())
+          .toString());
+
   sp.setDouble('lastChange', 0.0);
 
   debugPrint('$_motherProperties Saving Mother Properties ...');

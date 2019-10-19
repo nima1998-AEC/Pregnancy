@@ -28,7 +28,7 @@ class _ProfilePage extends State<ProfilePage> {
   final heightController = TextEditingController();
   final weightController = TextEditingController();
   final dateController = TextEditingController();
-  final numberController = TextEditingController();
+  String numberController = "1";
 
   String bmi = '';
   String status = '';
@@ -190,16 +190,17 @@ class _ProfilePage extends State<ProfilePage> {
                                       decimal: true),
                                   decoration: InputDecoration(
                                       helperText: notNull
-                                          ? "قد قبل از بارداری(برحسب متر)"
+                                          ? "قد(برحسب سانتی متر)"
                                           : null,
                                       hintText: notNull
-                                          ? motherProperties.height
-                                              .toStringAsFixed(2)
+                                          ? (motherProperties.height * 100)
+                                              .floorToDouble()
+                                              .floor()
                                               .toString()
                                           : null,
                                       labelText: notNull
                                           ? null
-                                          : "قد قبل از بارداری(برحسب متر)"),
+                                          : "قد(برحسب سانتی متر)"),
                                 ),
                                 margin: EdgeInsets.all(8.0),
                               ),
@@ -258,18 +259,43 @@ class _ProfilePage extends State<ProfilePage> {
                             ),
                             Directionality(
                               child: Container(
-                                child: TextFormField(
-                                  controller: numberController,
-                                  keyboardType:
-                                      TextInputType.numberWithOptions(),
-                                  decoration: InputDecoration(
-                                      helperText:
-                                          notNull ? "تعداد جنین(قل)" : null,
-                                      hintText: notNull
-                                          ? motherProperties.number.toString()
-                                          : null,
-                                      labelText:
-                                          notNull ? null : "تعداد جنین(قل)"),
+                                child: DropdownButton<String>(
+                                  value: numberController,
+                                  icon: Icon(Icons.keyboard_arrow_down),
+                                  iconSize: 24,
+                                  underline: Container(
+                                    height: 2,
+                                    color: Colors.black26,
+                                  ),
+                                  onChanged: (String newValue) {
+                                    setState(() {
+                                      if (newValue == "1")
+                                        numberController = "1";
+                                      else if (newValue == "2")
+                                        numberController = "2";
+                                      else
+                                        numberController = "2";
+                                    });
+                                  },
+                                  items: <String>[
+                                    '1',
+                                    '2',
+                                    'بیشتر از 2',
+                                  ].map<DropdownMenuItem<String>>(
+                                      (String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Container(
+                                        alignment: Alignment.centerRight,
+                                        child: Text(
+                                          value,
+                                          textDirection: TextDirection.rtl,
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  isExpanded: true,
+                                  // hint: Text("تعداد جنین"),
                                 ),
                                 margin: EdgeInsets.all(8.0),
                               ),
@@ -331,11 +357,16 @@ class _ProfilePage extends State<ProfilePage> {
                                       );
                                     } else if (_heightValid && _weightValid) {
                                       bmi = calculationBmi(
-                                          heightController.text,
-                                          weightController.text)[0];
+                                        (double.parse(heightController.text) /
+                                                100.0)
+                                            .toString(),
+                                        weightController.text,
+                                      )[0];
 
                                       status = calculationBmi(
-                                          heightController.text,
+                                          (double.parse(heightController.text) /
+                                                  100.0)
+                                              .toString(),
                                           weightController.text)[1];
                                       changeStatusColor(bmi);
                                     }
@@ -519,16 +550,18 @@ class _ProfilePage extends State<ProfilePage> {
                                 heightController.text,
                                 weightController.text,
                                 dateController.text,
-                                numberController.text);
+                                numberController.toString());
 
                             if (_valid) {
                               saveProfileData(
                                 nameController.text,
                                 int.parse(ageController.text),
-                                double.parse(heightController.text),
+                                double.parse(
+                                    (double.parse(heightController.text) / 100)
+                                        .toString()),
                                 double.parse(weightController.text),
                                 dateController.text,
-                                int.parse(numberController.text),
+                                int.parse(numberController.toString()),
                               );
                               Navigator.pushReplacementNamed(
                                   context, '/MainPage');

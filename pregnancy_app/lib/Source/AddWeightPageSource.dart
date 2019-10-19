@@ -8,26 +8,27 @@ Future<void> saveWeeklyWeight(
     String weekValue, String weightValue, String dateValue) async {
   final sp = await SharedPreferences.getInstance();
 
+  print(weightValue);
   List<String> weeklyWeight;
-  String _weekKey;
+  // String _weekKey;
 
-  _weekKey = weekKey(weekValue);
-  weeklyWeight = [_weekKey, weightValue, dateValue];
-  sp.setStringList(_weekKey, weeklyWeight);
+  // _weekKey = weekKey(weekValue);
+  weeklyWeight = [weekValue, weightValue, dateValue];
+  sp.setStringList(weekValue, weeklyWeight);
 
   String lastWeek = sp.getString('lastWeek');
-  if (int.parse(_weekKey) > int.parse(lastWeek)) {
+  if (int.parse(weekValue) > int.parse(lastWeek)) {
     List<String> lastWeeklyData = sp.getStringList(lastWeek);
     double lastWeeklyWeight = double.parse(lastWeeklyData[1]);
 
     sp.setDouble(
         'lastChange', (lastWeeklyWeight - double.parse(weightValue)).abs());
     sp.setDouble('lastWeight', double.parse(weightValue));
-    sp.setString('lastWeek', _weekKey);
+    sp.setString('lastWeek', weekValue);
 
     debugPrint('Update Last Week,Weight,Change Wight ...');
   } else {
-    debugPrint('Update Week$_weekKey Data');
+    debugPrint('Update Week$weekValue Data');
   }
 }
 
@@ -110,12 +111,13 @@ Future<String> setStatus() async {
 
 void validation(BuildContext context, String weekValue, String weightValue,
     String dateValue) {
-  if (weekValue.isEmpty || weightValue.isEmpty || dateValue.isEmpty) {
+  if (weightValue.isEmpty) {
     Fluttertoast.showToast(
       msg: 'اطلاعات را بصورت کامل وارد نمایید',
       backgroundColor: Color.fromARGB(255, 218, 86, 152).withOpacity(0.8),
     );
   } else {
+    print("BIRDAAAAAAAA : $weightValue");
     saveWeeklyWeight(weekValue, weightValue, dateValue);
     // loadLastWeight(context);
     // getData();
@@ -123,9 +125,9 @@ void validation(BuildContext context, String weekValue, String weightValue,
   }
 }
 
-bool calucateValidation(String weekValue, String weightValue) {
+bool calucateValidation(String weightValue) {
   bool _valid;
-  if (weekValue.isEmpty || weightValue.isEmpty) {
+  if (weightValue.isEmpty) {
     _valid = false;
   } else {
     _valid = true;
@@ -156,8 +158,10 @@ Future<List<String>> calucate(String weightValue, String weekValue) async {
 
   // Status
   fetusNumber = sp.getInt('number');
-  _weekNumber = weekKey(weekValue);
-  _normalWeeklyWeight = sp.getStringList('week' + _weekNumber);
+  print("weekValue =====> $weekValue");
+  // _weekNumber = weekKey(weekValue);
+  _normalWeeklyWeight =
+      sp.getStringList('week' + (int.parse(weekValue) + 1).toString());
 
   if (fetusNumber == 1) {
     if (double.parse(_weightChangeFromLastWeek) >=

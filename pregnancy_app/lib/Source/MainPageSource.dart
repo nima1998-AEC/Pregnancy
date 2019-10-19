@@ -7,11 +7,12 @@ Future<String> getWeek() async {
   final sp = await SharedPreferences.getInstance();
 
   String lastWeek, week;
-  List<String> weeks;
+  List<String> weeks = new List<String>();
 
   weeks = weeksList();
   lastWeek = sp.getString('lastWeek');
-  week = weeks[int.parse(lastWeek) - 1];
+  print("lastWeek =======> $lastWeek");
+  week = weeks[int.parse(lastWeek)];
 
   return week;
 }
@@ -79,5 +80,6 @@ Future<String> getStatus() async {
       status = 'چاق';
   }
 
+  print("status : $status");
   return status;
 }
